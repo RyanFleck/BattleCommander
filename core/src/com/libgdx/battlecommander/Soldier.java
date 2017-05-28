@@ -6,8 +6,24 @@ package com.libgdx.battlecommander;
  *
  */
 public class Soldier {
-	String name;
-	int hp;
+	public String name;
+	private int hp;
+	
+	//public static void main(String[] args){System.out.println("Test");}
+	
+	public Soldier(String name_i){
+		this.name = name_i.toUpperCase();
+		this.hp = 100;
+		System.out.println(this.name.toString()+" reporting for duty, SIR!");
+	}
+	
+	public void Yell(Soldier other){
+		System.out.println(other.name+"! You are an IDIOT!");
+	}
+	
+	public void RollCall(){
+		System.out.println("Test"+hp);
+	}
 	
 	
 }
