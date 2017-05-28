@@ -63,7 +63,7 @@ public class BattleCommander extends ApplicationAdapter {
         	testShape.y += 1;}
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
         	System.out.println("Down");
-        	testShape.y -= 1;}
+        	testShape.y -= 1;} 
 		
 		//SET ACTIONS
 		//martin.Yell(james);
