@@ -8,15 +8,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class BattleCommander extends ApplicationAdapter {
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Soldier martin,james;
+
 	private Rectangle testShape;
 	private Texture world;
 	private Texture soldier;
+	private int frames=0,startTime=0,currentTime;
 	
 	@Override
 	public void create () {
@@ -27,6 +29,9 @@ public class BattleCommander extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		world = new Texture(Gdx.files.internal("world.jpg"));
 		soldier = new Texture(Gdx.files.internal("SoldierA.png"));
+		
+
+		startTime = (int) (TimeUtils.millis()/1000);
 		
 		testShape = new Rectangle();
 		testShape.width = 64;
@@ -39,15 +44,13 @@ public class BattleCommander extends ApplicationAdapter {
 		System.out.println("Loading assets.");
 		
 		
-		
-		Soldier martin = new Soldier("Martin");
-		Soldier james = new Soldier("James");
-		
+
 		System.out.println("Game intialized.\n\n");
 	}
 
 	@Override
 	public void render () {
+		frames+=1;
 		//QUERY INPUT
 		
 		
@@ -65,10 +68,7 @@ public class BattleCommander extends ApplicationAdapter {
         	System.out.println("Down");
         	testShape.y -= 1;} 
 		
-		//SET ACTIONS
-		//martin.Yell(james);
-		//james.Yell(martin);
-		
+
 		//DRAW GRAPHICS
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -80,6 +80,9 @@ public class BattleCommander extends ApplicationAdapter {
 		
 		
 		batch.end();
+		if(frames % 60 == 0){
+		currentTime = (int) (TimeUtils.millis()/1000 - startTime);
+		System.out.println(frames+" frames, ms:"+currentTime);}
 	}
 	
 	@Override
