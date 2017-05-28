@@ -12,8 +12,12 @@ public class BattleCommander extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		System.out.println("Initializing game.");
+		System.out.println("Loading assets.");
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		System.out.println("Game intialized.\n\n");
 	}
 
 	@Override
@@ -22,6 +26,7 @@ public class BattleCommander extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0);
+
 		batch.end();
 	}
 	
@@ -29,5 +34,6 @@ public class BattleCommander extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+
 	}
 }
