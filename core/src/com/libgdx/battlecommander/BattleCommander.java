@@ -52,18 +52,22 @@ public class BattleCommander extends ApplicationAdapter {
 		
 		
 		//CHECK VARIABLES
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
+		if (Gdx.input.isKeyPressed(Keys.LEFT)){
             System.out.println("Left");
-        if (Gdx.input.isKeyPressed(Keys.RIGHT))
+			testShape.x -= 1;}
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)){
         	System.out.println("Right");
-        if (Gdx.input.isKeyPressed(Keys.UP))
+        	testShape.x += 1;}
+        if (Gdx.input.isKeyPressed(Keys.UP)){
         	System.out.println("Up");
-        if (Gdx.input.isKeyPressed(Keys.DOWN))
+        	testShape.y += 1;}
+        if (Gdx.input.isKeyPressed(Keys.DOWN)){
         	System.out.println("Down");
+        	testShape.y -= 1;}
 		
 		//SET ACTIONS
-		martin.Yell(james);
-		james.Yell(martin);
+		//martin.Yell(james);
+		//james.Yell(martin);
 		
 		//DRAW GRAPHICS
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
