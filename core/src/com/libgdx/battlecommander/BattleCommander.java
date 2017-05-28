@@ -6,9 +6,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+
+/*
+ * Panning battle map:
+ * https://github.com/libgdx/libgdx/wiki/Orthographic-camera
+ * 
+ * 
+ * 
+ * 
+ * */
 
 public class BattleCommander extends ApplicationAdapter {
 	
@@ -16,19 +26,27 @@ public class BattleCommander extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	private Rectangle testShape;
-	private Texture world;
 	private Texture soldier;
 	private int frames=0,startTime=0,currentTime;
+	static final int WORLDX = 2000;
+	static final int WORLDY = 2000;
+	private float initialx,initialy;
+	private boolean flipx=false;
+	
+	private Sprite mapSprite;
 	
 	@Override
 	public void create () {
 		System.out.println("Initializing game.");
 		
+		mapSprite = new Sprite(new Texture(Gdx.files.internal("GreenGrid.png")));
+		mapSprite.setPosition(0, 0);
+		mapSprite.setSize(WORLDX, WORLDY);
+		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false,800,600);
+		camera.setToOrtho(false,80,60);
 		batch = new SpriteBatch();
-		world = new Texture(Gdx.files.internal("world.jpg"));
-		soldier = new Texture(Gdx.files.internal("SoldierA.png"));
+		soldier = new Texture(Gdx.files.internal("SoldierBh.png"));
 		
 
 		startTime = (int) (TimeUtils.millis()/1000);
@@ -38,6 +56,7 @@ public class BattleCommander extends ApplicationAdapter {
 		testShape.height = 64;
 		testShape.x = 8;
 		testShape.y = 0;
+		
 		
 		
 		
@@ -52,9 +71,31 @@ public class BattleCommander extends ApplicationAdapter {
 	public void render () {
 		frames+=1;
 		//QUERY INPUT
-		
+		queryInput();
 		
 		//CHECK VARIABLES
+		adjustVariables();
+		
+		//DRAW GRAPHICS
+		drawGraphics();
+
+		
+		
+		if(frames % 60 == 0){
+		currentTime = (int) (TimeUtils.millis()/1000 - startTime);
+		System.out.println(frames+" frames, ms:"+currentTime);}
+	}
+	
+	@Override
+	public void dispose () {
+		batch.dispose();
+
+	}
+	
+	public void queryInput(){
+		initialx = testShape.x;
+		initialy = testShape.y;
+		
 		if (Gdx.input.isKeyPressed(Keys.LEFT)){
             System.out.println("Left");
 			testShape.x -= 1;}
@@ -67,27 +108,30 @@ public class BattleCommander extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Keys.DOWN)){
         	System.out.println("Down");
         	testShape.y -= 1;} 
+	}
+	public void adjustVariables(){
+		if(initialx>testShape.x){
+			flipx=true;
+		}else if(initialx<testShape.x){
+			flipx=false;
+		}
 		
-
-		//DRAW GRAPHICS
+	}
+	
+	public void drawGraphics(){
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
+		//SPRITEBATCH BEGIN
 		batch.begin();
+		batch.draw(soldier,testShape.x, testShape.y, 32,32, 2, 0, 32, 32, flipx, false);
+		//batch.draw(soldier, testShape.x, testShape.y,flipx,false);
+		//batch.draw(soldier, testShape.x+20, testShape.y+10,flipx,false);
 		
-		batch.draw(soldier, testShape.x, testShape.y);
-		
-		
+		//SPRITEBATCH END
 		batch.end();
-		if(frames % 60 == 0){
-		currentTime = (int) (TimeUtils.millis()/1000 - startTime);
-		System.out.println(frames+" frames, ms:"+currentTime);}
 	}
 	
-	@Override
-	public void dispose () {
-		batch.dispose();
-
-	}
+	
 }
