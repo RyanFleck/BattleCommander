@@ -30,6 +30,7 @@ public class BattleCommander extends ApplicationAdapter {
 	private int frames=0,startTime=0,currentTime;
 	static final int WORLDX = 2000;
 	static final int WORLDY = 2000;
+	@SuppressWarnings("unused")
 	private float initialx,initialy;
 	private boolean flipx=false;
 	private float clickX=10,clickY=10;
