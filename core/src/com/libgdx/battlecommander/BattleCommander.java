@@ -32,6 +32,8 @@ public class BattleCommander extends ApplicationAdapter {
 	static final int WORLDY = 2000;
 	private float initialx,initialy;
 	private boolean flipx=false;
+	private float clickX=10,clickY=10;
+	
 	
 	private Sprite mapSprite;
 	
@@ -39,14 +41,18 @@ public class BattleCommander extends ApplicationAdapter {
 	public void create () {
 		System.out.println("Initializing game.");
 		
+		//MAP
 		mapSprite = new Sprite(new Texture(Gdx.files.internal("GreenGrid.png")));
 		mapSprite.setPosition(0, 0);
 		mapSprite.setSize(WORLDX, WORLDY);
 		
+		//CAMERA AND WINDOW
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,80,60);
+		
+		//SPRITES AND OBJECTS
 		batch = new SpriteBatch();
-		soldier = new Texture(Gdx.files.internal("SoldierBh.png"));
+		soldier = new Texture(Gdx.files.internal("SoldierC.png"));
 		
 
 		startTime = (int) (TimeUtils.millis()/1000);
@@ -92,7 +98,18 @@ public class BattleCommander extends ApplicationAdapter {
 
 	}
 	
+	@Override
+	public void resize(int width, int height){
+		//viewport.update(width,height);
+	}
+	
 	public void queryInput(){
+		
+		//MOUSE INPUT
+		clickX = 80*Gdx.input.getX()/Gdx.graphics.getWidth();
+		clickY = 60-60*Gdx.input.getY()/Gdx.graphics.getHeight();
+		
+		//KEY INPUT
 		initialx = testShape.x;
 		initialy = testShape.y;
 		
@@ -125,8 +142,10 @@ public class BattleCommander extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		//SPRITEBATCH BEGIN
 		batch.begin();
+		batch.draw(soldier,clickX-16,clickY-16);
 		batch.draw(soldier,testShape.x, testShape.y, 32,32, 2, 0, 32, 32, flipx, false);
 		//batch.draw(soldier, testShape.x, testShape.y,flipx,false);
+		
 		//batch.draw(soldier, testShape.x+20, testShape.y+10,flipx,false);
 		
 		//SPRITEBATCH END
