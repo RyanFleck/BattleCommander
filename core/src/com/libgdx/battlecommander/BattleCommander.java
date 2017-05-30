@@ -16,15 +16,14 @@ import com.badlogic.gdx.utils.TimeUtils;
  * https://github.com/libgdx/libgdx/wiki/Orthographic-camera
  * 
  * 
- * 
- * 
  * */
 
 public class BattleCommander extends ApplicationAdapter {
 	
+	//Camera and map objects
 	private OrthographicCamera camera;
+	
 	private SpriteBatch batch;
-
 	private Rectangle testShape;
 	private Texture soldier;
 	private int frames=0,startTime=0,currentTime;

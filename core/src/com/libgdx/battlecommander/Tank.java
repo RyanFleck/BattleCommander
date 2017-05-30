@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * @author rflec028
  *
  */
-public class Soldier extends Actor implements Unit{
+public class Tank extends Actor implements Unit{
 
 	@Override
 	public boolean Move(int coordA, int coordB) {
@@ -43,5 +43,5 @@ public class Soldier extends Actor implements Unit{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }
