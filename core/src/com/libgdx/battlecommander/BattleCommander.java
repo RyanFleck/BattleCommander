@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 /*
  * Resources used:
@@ -28,6 +29,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private TiledMap map;
 	private OrthographicCamera cam;
 	private TiledMapRenderer mapRenderer;
+	private float scale = 2;
 	
 	//Sprites:
 	private SpriteBatch sb;
@@ -41,8 +43,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		
 		//BATTLE MAP INITIALIZATION:
 		//Query width and height of window.
-		float w = Gdx.graphics.getWidth()/2;
-		float h = Gdx.graphics.getHeight()/2;
+		float w = Gdx.graphics.getWidth()/scale;
+		float h = Gdx.graphics.getHeight()/scale;
 		
 		//Initialize camera.
 		cam = new OrthographicCamera();
@@ -62,6 +64,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		//Soldier:
 		soldierTexture = new Texture(Gdx.files.internal("SoldierC.png"));
 		soldier = new Sprite(soldierTexture);
+		//soldier.setScale(scale);
 		
 	}
 
@@ -73,14 +76,15 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	@Override
 	public void dispose () {
-
+		sb.dispose();
+		
 
 	}
 	
 	@Override
 	public void resize(int width, int height){
-		cam.setToOrtho(false, width/2, height/2);
-		//update(width,height);
+		//cam.setToOrtho(false, width/scale, height/scale);
+		
 	}
 	
 	public void adjustVariables(){
@@ -89,12 +93,22 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	}
 	
 	public void drawGraphics(){
-		 Gdx.gl.glClearColor(0, 0, 0, 0);
-	     Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	     cam.update();
-	     mapRenderer.setView(cam);
-	     mapRenderer.render();
+		
+		//Map and background:
+		Gdx.gl.glClearColor(0, 0, 0, 0);
+	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    cam.update();
+	    mapRenderer.setView(cam);
+	    mapRenderer.render();
+	    
+	    
+	    //Sprites:
+	    sb.setProjectionMatrix(cam.combined);
+	    sb.begin();
+	   
+	    soldier.draw(sb);
+	    sb.end();
 	}
 	
 	@Override
@@ -132,7 +146,10 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+    	Vector3 i = new Vector3(screenX,screenY,0);
+    	Vector3 j = cam.unproject(i); //.scl(scale);
+    	soldier.setPosition(j.x,j.y);
+        return true;
     }
 
     @Override
