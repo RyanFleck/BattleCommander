@@ -141,7 +141,12 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+    	//Vector3 i = new Vector3(screenX,screenY,0);
+    	//Vector3 j = cam.unproject(i); //.scl(scale);
+    	//soldier.setPosition(j.x,j.y);
+        //return true;
+    	return false;
+       
     }
 
     @Override
