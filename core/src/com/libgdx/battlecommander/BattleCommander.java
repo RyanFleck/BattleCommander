@@ -30,8 +30,9 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private OrthographicCamera cam;
 	private TiledMapRenderer mapRenderer;
 	private float scale = 2;
+	private float w,h;
 	
-	//Sprites:
+	//Sprite:
 	private SpriteBatch sb;
 	private Texture soldierTexture;
 	private Sprite soldier;
@@ -43,8 +44,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		
 		//BATTLE MAP INITIALIZATION:
 		//Query width and height of window.
-		float w = Gdx.graphics.getWidth()/scale;
-		float h = Gdx.graphics.getHeight()/scale;
+		w = Gdx.graphics.getWidth()/scale;
+		h = Gdx.graphics.getHeight()/scale;
 		
 		//Initialize camera.
 		cam = new OrthographicCamera();
@@ -64,6 +65,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		//Soldier:
 		soldierTexture = new Texture(Gdx.files.internal("SoldierC.png"));
 		soldier = new Sprite(soldierTexture);
+		soldier.setOriginCenter();
 		//soldier.setScale(scale);
 		
 	}
@@ -83,7 +85,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	@Override
 	public void resize(int width, int height){
-		//cam.setToOrtho(false, width/scale, height/scale);
+		System.out.println("Resized window to "+width+" by "+height);
+		cam.setToOrtho(false, width/scale, height/scale);
 		
 	}
 	
@@ -130,12 +133,16 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
             map.getLayers().get(0).setVisible(!map.getLayers().get(0).isVisible());
         if(keycode == Input.Keys.NUM_2)
             map.getLayers().get(1).setVisible(!map.getLayers().get(1).isVisible());
+        if(keycode == Input.Keys.EQUALS || keycode == Input.Keys.PLUS)
+        	zoomIn();
+        if(keycode == Input.Keys.MINUS)
+        	zoomOut();
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-
+    	System.out.println(character);
         return false;
     }
 
@@ -170,6 +177,23 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+    
+    
+    //ADDITONAL MAP FUNCTIONS:
+    private void zoomIn(){
+    	scale = scale * 2;
+    	w = Gdx.graphics.getWidth()/scale;
+		h = Gdx.graphics.getHeight()/scale;
+		cam.setToOrtho(false,w,h);
+		cam.update();
+    }
+    private void zoomOut(){
+    	scale = scale / 2;
+    	w = Gdx.graphics.getWidth()/scale;
+		h = Gdx.graphics.getHeight()/scale;
+		cam.setToOrtho(false,w,h);
+		cam.update();
     }
 	
 	
