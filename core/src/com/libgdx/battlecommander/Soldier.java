@@ -13,11 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Soldier extends Actor implements Unit{
 
 	private Texture sTex;
-	private float x,y,nextx,nexty;
+	private float x,y,nextx,nexty,xdis=0,ydis=0,speed;
 	private SpriteBatch sb;
 	private Sprite sSprite;
+	private boolean xMovLock=true,yMovLock=true;
 	
-	public Soldier(SpriteBatch globalSpriteBatch){
+	public Soldier(SpriteBatch globalSpriteBatch,float spawnx,float spawny){
+		x=spawnx;
+		y=spawny;
+		nextx=x;
+		nexty=y;
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
 		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
@@ -26,27 +31,46 @@ public class Soldier extends Actor implements Unit{
 		sSprite.setOriginCenter();
 		sSprite.setX(x);
 		sSprite.setY(y);
+		speed=5;
 	}
 	public void render(){
+		if(x!=nextx && xMovLock==false){
+			xdis= Math.abs(x-nextx);
+			
+			if(xdis<=9){
+				xdis=0;
+				x=nextx;
+				xMovLock=true;}
+			else if(x>nextx)
+				x-=speed;
+			else if(x<nextx)
+				x+=speed;
+			
+		}else if(y!=nexty && yMovLock==false){
+			ydis= Math.abs(y-nexty);
+			if(ydis<=9){
+				ydis=0;
+				y=nexty;
+				yMovLock=true;
+			}
+			if(y>nexty)
+				y-=speed;
+			else if(y<nexty)
+				y+=speed;
+		}
+		sSprite.setX(x);
+		sSprite.setY(y);
 		sSprite.draw(sb);
 	}
 	
 	@Override
-	public void spawn(int coordX, int coordY) {
-		x=coordX;
-		y=coordY;
-	}
-	
-	@Override
 	public boolean Move(int coordA, int coordB) {
-		nextx = coordA;
-		nexty = coordB;
-		x=nextx;
-		y=nexty;
-		
-		sSprite.setX(x-16);
-		sSprite.setY(y-16);
-		return false;
+		nextx = Math.round(coordA);
+		nexty = Math.round(coordB);
+		xMovLock=false;
+		yMovLock=false;
+		System.out.println("Moving from ("+x+","+y+") to ("+nextx+","+nexty+").");
+		return true;
 	}
 
 	@Override
