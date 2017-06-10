@@ -37,6 +37,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private Texture soldierTexture;
 	private Sprite soldier;
 	
+	private Soldier a,b,c;
+	
 	
 	
 	@Override
@@ -67,6 +69,11 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		soldier = new Sprite(soldierTexture);
 		soldier.setOriginCenter();
 		//soldier.setScale(scale);
+		
+		//Soldier class test:
+		a= new Soldier();
+		b= new Soldier();
+		c= new Soldier();
 		
 	}
 
@@ -121,6 +128,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean keyUp(int keycode) {
+    	
+    	//Map movement.
         if(keycode == Input.Keys.LEFT)
             cam.translate(-32,0);
         if(keycode == Input.Keys.RIGHT)
@@ -137,6 +146,24 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
         	zoomIn();
         if(keycode == Input.Keys.MINUS)
         	zoomOut();
+        
+        
+        //To-be cursor controls (currently soldier controls)
+        if(keycode == Input.Keys.A)//Cursor LEFT
+        	soldier.setX(soldier.getX()-32);
+            
+        if(keycode == Input.Keys.D)//Cursor RIGHT
+        	soldier.setX(soldier.getX()+32);
+        if(keycode == Input.Keys.W)//Cursor UP
+        	soldier.setY(soldier.getY()+32);
+        if(keycode == Input.Keys.S)//Cursor DOWN
+        	soldier.setY(soldier.getY()-32);
+        if(keycode == Input.Keys.SPACE)//Cursor SELECT
+        	System.out.println("Selecting unit under cursor...");
+        	
+        
+        
+        
         return false;
     }
 
@@ -158,10 +185,10 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    	Vector3 i = new Vector3(screenX,screenY,0);
-    	Vector3 j = cam.unproject(i); //.scl(scale);
-    	soldier.setPosition(j.x,j.y);
-        return true;
+    	//Vector3 i = new Vector3(screenX,screenY,0);
+    	//Vector3 j = cam.unproject(i); //.scl(scale);
+    	//soldier.setPosition(j.x,j.y);
+        return false;
     }
 
     @Override

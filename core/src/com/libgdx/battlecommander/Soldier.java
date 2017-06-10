@@ -43,5 +43,11 @@ public class Soldier extends Actor implements Unit{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void spawn(int coordA, int coordB) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

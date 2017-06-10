@@ -2,6 +2,15 @@ package com.libgdx.battlecommander;
 
 public interface Unit{
 	
+	
+	/*
+	====================
+	Move
+	-Checks if the coordinate can be moved to, then moves the unit to the coordinates.
+	-Plays movement animations.
+	====================
+	*/
+	public void spawn(int coordA,int coordB);
 	/*
 	====================
 	Move
