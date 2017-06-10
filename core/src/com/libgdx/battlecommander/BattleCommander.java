@@ -4,10 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -32,7 +30,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private float scale = 2;
 	private float w,h;
 	
-	private Soldier a,b,c,selected;
+	private Soldier a,b,c;
 	private SpriteBatch sb;
 	
 	
@@ -62,7 +60,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		a= new Soldier(sb);
 		b= new Soldier(sb);
 		c= new Soldier(sb);
-		selected = a;
+
 		
 		
 		
@@ -96,8 +94,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		
 		//Map and background:
 		Gdx.gl.glClearColor(0, 0, 0, 0);
-	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+	    Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 	    cam.update();
 	    mapRenderer.setView(cam);
 	    mapRenderer.render();
@@ -186,7 +184,10 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     	Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i); //.scl(scale);
-    	selected.Move((int)j.x,(int)j.y);
+    	a.Move((int)j.x,(int)j.y);
+    	b.Move((int)j.x/2,(int)j.y/2);
+    	c.Move((int)j.x/4,(int)j.y/4);
+    	
         return false;
     }
 
