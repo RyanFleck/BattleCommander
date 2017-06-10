@@ -39,7 +39,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	@Override
 	public void create () {
-		
+			
 		
 		//BATTLE MAP INITIALIZATION:
 		//Query width and height of window.
@@ -139,27 +139,6 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
         	zoomIn();
         if(keycode == Input.Keys.MINUS)
         	zoomOut();
-        
-        /*//Temporary unit selection:
-        if(keycode == Input.Keys.NUM_1)
-            selected = a;
-        if(keycode == Input.Keys.NUM_2)
-            selected = b;
-        if(keycode == Input.Keys.NUM_3)
-            selected = c;*/
-        /*
-        //To-be cursor controls (currently soldier controls)
-        if(keycode == Input.Keys.A)//Cursor LEFT
-        	a.Move(, coordB)
-        if(keycode == Input.Keys.D)//Cursor RIGHT
-        	a.Move(
-        if(keycode == Input.Keys.W)//Cursor UP
-        	a.Move(
-        if(keycode == Input.Keys.S)//Cursor DOWN
-        	a.Move(
-        if(keycode == Input.Keys.SPACE)//Cursor SELECT
-        	System.out.println("Selecting unit under cursor...");
-        	*/
         
         
         

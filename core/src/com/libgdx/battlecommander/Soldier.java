@@ -23,7 +23,6 @@ public class Soldier extends Actor implements Unit{
 		y=spawny;
 		nextx=x;
 		nexty=y;
-		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
 		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
 		sSprite = new Sprite(sTex);
@@ -32,6 +31,7 @@ public class Soldier extends Actor implements Unit{
 		sSprite.setX(x);
 		sSprite.setY(y);
 		speed=5;
+		System.out.println("Soldier spawned!");
 	}
 	public void render(){
 		if(x!=nextx && xMovLock==false){
@@ -70,6 +70,7 @@ public class Soldier extends Actor implements Unit{
 		xMovLock=false;
 		yMovLock=false;
 		System.out.println("Moving from ("+x+","+y+") to ("+nextx+","+nexty+").");
+		
 		return true;
 	}
 
