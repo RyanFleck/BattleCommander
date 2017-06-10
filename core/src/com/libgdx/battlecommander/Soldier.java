@@ -22,6 +22,7 @@ public class Soldier extends Actor implements Unit{
 		sb = globalSpriteBatch;
 		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
 		sSprite = new Sprite(sTex);
+		sSprite.setCenter(16, 16);
 		sSprite.setOriginCenter();
 		sSprite.setX(x);
 		sSprite.setY(y);
@@ -43,8 +44,8 @@ public class Soldier extends Actor implements Unit{
 		x=nextx;
 		y=nexty;
 		
-		sSprite.setX(x);
-		sSprite.setY(y);
+		sSprite.setX(x-16);
+		sSprite.setY(y-16);
 		return false;
 	}
 
