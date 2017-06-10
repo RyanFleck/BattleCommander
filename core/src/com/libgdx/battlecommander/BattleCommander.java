@@ -34,21 +34,11 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private SpriteBatch sb;
 	
 	
+	
+	
 	@Override
 	public void create () {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-			
-=======
->>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
-=======
->>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
-=======
-			
-=======
->>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
->>>>>>> 74b3dca4c93f7bd0de27efa0b58f569a7b2b3221
+		
 		
 		//BATTLE MAP INITIALIZATION:
 		//Query width and height of window.
@@ -70,9 +60,9 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		sb = new SpriteBatch();
 		
 		//Soldier class test:
-		a= new Soldier(sb);
-		b= new Soldier(sb);
-		c= new Soldier(sb);
+		a= new Soldier(sb,50,30);
+		b= new Soldier(sb,100,30);
+		c= new Soldier(sb,150,30);
 
 		
 		
@@ -134,6 +124,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     public boolean keyUp(int keycode) {
     	
     	//Map movement.
+    	System.out.println(keycode);
         if(keycode == Input.Keys.LEFT)
             cam.translate(-32,0);
         if(keycode == Input.Keys.RIGHT)
@@ -142,14 +133,32 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
             cam.translate(0,32);
         if(keycode == Input.Keys.DOWN)
             cam.translate(0,-32);
-        if(keycode == Input.Keys.NUM_1)
-            map.getLayers().get(0).setVisible(!map.getLayers().get(0).isVisible());
-        if(keycode == Input.Keys.NUM_2)
-            map.getLayers().get(1).setVisible(!map.getLayers().get(1).isVisible());
+       
         if(keycode == Input.Keys.EQUALS || keycode == Input.Keys.PLUS)
         	zoomIn();
         if(keycode == Input.Keys.MINUS)
         	zoomOut();
+        
+        /*//Temporary unit selection:
+        if(keycode == Input.Keys.NUM_1)
+            selected = a;
+        if(keycode == Input.Keys.NUM_2)
+            selected = b;
+        if(keycode == Input.Keys.NUM_3)
+            selected = c;*/
+        /*
+        //To-be cursor controls (currently soldier controls)
+        if(keycode == Input.Keys.A)//Cursor LEFT
+        	a.Move(, coordB)
+        if(keycode == Input.Keys.D)//Cursor RIGHT
+        	a.Move(
+        if(keycode == Input.Keys.W)//Cursor UP
+        	a.Move(
+        if(keycode == Input.Keys.S)//Cursor DOWN
+        	a.Move(
+        if(keycode == Input.Keys.SPACE)//Cursor SELECT
+        	System.out.println("Selecting unit under cursor...");
+        	*/
         
         
         
@@ -158,7 +167,6 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean keyTyped(char character) {
-    	System.out.println(character);
         return false;
     }
 
@@ -176,6 +184,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
     	Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i); //.scl(scale);
+    	System.out.println("Movement:");
     	a.Move((int)j.x,(int)j.y);
     	b.Move((int)j.x/2,(int)j.y/2);
     	c.Move((int)j.x/4,(int)j.y/4);
