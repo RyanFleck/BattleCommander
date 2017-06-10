@@ -13,9 +13,7 @@ Next release targets:
 1. Click-based commands:
   * Unit selection.
   * Unit movement.
-  * Unit actions:
-    * Attacking
-    * Resupply
+  * Unit actions, attack and resupply.
 2. Unit interface properly outfitted.
 3. Soldier class implemented:
   * Animation when moving to new tile.
