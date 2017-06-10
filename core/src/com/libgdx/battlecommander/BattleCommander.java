@@ -38,11 +38,17 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	public void create () {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
 =======
 >>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
 =======
 >>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
+=======
+			
+=======
+>>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
+>>>>>>> 74b3dca4c93f7bd0de27efa0b58f569a7b2b3221
 		
 		//BATTLE MAP INITIALIZATION:
 		//Query width and height of window.
