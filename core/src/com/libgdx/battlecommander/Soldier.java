@@ -13,16 +13,20 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Soldier extends Actor implements Unit{
 
 	private Texture sTex;
-	private float x,y,nextx,nexty,xdis=0,ydis=0,speed;
+	private float x,y,nextx,nexty;
 	private SpriteBatch sb;
 	private Sprite sSprite;
-	private boolean xMovLock=true,yMovLock=true;
 	
+<<<<<<< HEAD
 	public Soldier(SpriteBatch globalSpriteBatch,float spawnx,float spawny){
 		x=spawnx;
 		y=spawny;
 		nextx=x;
 		nexty=y;
+=======
+	public Soldier(SpriteBatch globalSpriteBatch){
+		System.out.println("Soldier spawned!");
+>>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
 		sb = globalSpriteBatch;
 		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
 		sSprite = new Sprite(sTex);
@@ -30,41 +34,25 @@ public class Soldier extends Actor implements Unit{
 		sSprite.setOriginCenter();
 		sSprite.setX(x);
 		sSprite.setY(y);
+<<<<<<< HEAD
 		speed=5;
 		System.out.println("Soldier spawned!");
+=======
+>>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
 	}
 	public void render(){
-		if(x!=nextx && xMovLock==false){
-			xdis= Math.abs(x-nextx);
-			
-			if(xdis<=9){
-				xdis=0;
-				x=nextx;
-				xMovLock=true;}
-			else if(x>nextx)
-				x-=speed;
-			else if(x<nextx)
-				x+=speed;
-			
-		}else if(y!=nexty && yMovLock==false){
-			ydis= Math.abs(y-nexty);
-			if(ydis<=9){
-				ydis=0;
-				y=nexty;
-				yMovLock=true;
-			}
-			if(y>nexty)
-				y-=speed;
-			else if(y<nexty)
-				y+=speed;
-		}
-		sSprite.setX(x);
-		sSprite.setY(y);
 		sSprite.draw(sb);
 	}
 	
 	@Override
+	public void spawn(int coordX, int coordY) {
+		x=coordX;
+		y=coordY;
+	}
+	
+	@Override
 	public boolean Move(int coordA, int coordB) {
+<<<<<<< HEAD
 		nextx = Math.round(coordA);
 		nexty = Math.round(coordB);
 		xMovLock=false;
@@ -72,6 +60,16 @@ public class Soldier extends Actor implements Unit{
 		System.out.println("Moving from ("+x+","+y+") to ("+nextx+","+nexty+").");
 		
 		return true;
+=======
+		nextx = coordA;
+		nexty = coordB;
+		x=nextx;
+		y=nexty;
+		
+		sSprite.setX(x-16);
+		sSprite.setY(y-16);
+		return false;
+>>>>>>> parent of c30ff48... Re-implemented soldier with unique class and sprite.
 	}
 
 	@Override
