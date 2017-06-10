@@ -25,18 +25,16 @@ public class Soldier extends Actor implements Unit{
 		nexty=y;
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
-		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
+		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierC.png"));
 		sSprite = new Sprite(sTex);
 		sSprite.setCenter(16, 16);
 		sSprite.setOriginCenter();
-		sSprite.setX(x);
-		sSprite.setY(y);
 		speed=5;
+		//this.Move((int)x,(int)y);
 	}
 	public void render(){
 		if(x!=nextx && xMovLock==false){
 			xdis= Math.abs(x-nextx);
-			
 			if(xdis<=9){
 				xdis=0;
 				x=nextx;
