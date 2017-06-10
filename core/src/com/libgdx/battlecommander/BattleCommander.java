@@ -163,8 +163,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     	Vector3 j = cam.unproject(i); //.scl(scale);
     	System.out.println("Movement:");
     	a.Move((int)j.x,(int)j.y);
-    	b.Move((int)j.x/2,(int)j.y/2);
-    	c.Move((int)j.x/4,(int)j.y/4);
+    	b.Move(2*(int)j.x/3,2*(int)j.y/3);
+    	c.Move((int)j.x/3,(int)j.y/3);
     	
         return false;
     }
