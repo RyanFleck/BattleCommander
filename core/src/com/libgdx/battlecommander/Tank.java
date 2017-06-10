@@ -44,6 +44,10 @@ public class Tank extends Actor implements Unit{
 		
 	}
 
-	
+	@Override
+	public void spawn(int coordX, int coordY) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
