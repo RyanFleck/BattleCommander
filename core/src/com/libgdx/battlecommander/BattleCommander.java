@@ -32,13 +32,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private float scale = 2;
 	private float w,h;
 	
-	//Sprite:
+	private Soldier a,b,c,selected;
 	private SpriteBatch sb;
-	private Texture soldierTexture;
-	private Sprite soldier;
-	
-	private Soldier a,b,c;
-	
 	
 	
 	@Override
@@ -60,20 +55,16 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		
 		Gdx.input.setInputProcessor(this);
 		
-		//SPRITE AND CHARACTER INITIALIZAITON:
-		//SpriteBatch
+		//Sprite rendering:
 		sb = new SpriteBatch();
 		
-		//Soldier:
-		soldierTexture = new Texture(Gdx.files.internal("SoldierC.png"));
-		soldier = new Sprite(soldierTexture);
-		soldier.setOriginCenter();
-		//soldier.setScale(scale);
-		
 		//Soldier class test:
-		a= new Soldier();
-		b= new Soldier();
-		c= new Soldier();
+		a= new Soldier(sb);
+		b= new Soldier(sb);
+		c= new Soldier(sb);
+		selected = a;
+		
+		
 		
 	}
 
@@ -85,7 +76,6 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	@Override
 	public void dispose () {
-		sb.dispose();
 		
 
 	}
@@ -112,13 +102,16 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	    mapRenderer.setView(cam);
 	    mapRenderer.render();
 	    
-	    
-	    //Sprites:
 	    sb.setProjectionMatrix(cam.combined);
 	    sb.begin();
-	   
-	    soldier.draw(sb);
+	    
+	    a.render();
+	    b.render();
+	    c.render();
+	    
 	    sb.end();
+	    
+	    
 	}
 	
 	@Override
@@ -147,20 +140,26 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
         if(keycode == Input.Keys.MINUS)
         	zoomOut();
         
-        
+        /*//Temporary unit selection:
+        if(keycode == Input.Keys.NUM_1)
+            selected = a;
+        if(keycode == Input.Keys.NUM_2)
+            selected = b;
+        if(keycode == Input.Keys.NUM_3)
+            selected = c;*/
+        /*
         //To-be cursor controls (currently soldier controls)
         if(keycode == Input.Keys.A)//Cursor LEFT
-        	soldier.setX(soldier.getX()-32);
-            
+        	a.Move(, coordB)
         if(keycode == Input.Keys.D)//Cursor RIGHT
-        	soldier.setX(soldier.getX()+32);
+        	a.Move(
         if(keycode == Input.Keys.W)//Cursor UP
-        	soldier.setY(soldier.getY()+32);
+        	a.Move(
         if(keycode == Input.Keys.S)//Cursor DOWN
-        	soldier.setY(soldier.getY()-32);
+        	a.Move(
         if(keycode == Input.Keys.SPACE)//Cursor SELECT
         	System.out.println("Selecting unit under cursor...");
-        	
+        	*/
         
         
         
@@ -185,9 +184,9 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    	//Vector3 i = new Vector3(screenX,screenY,0);
-    	//Vector3 j = cam.unproject(i); //.scl(scale);
-    	//soldier.setPosition(j.x,j.y);
+    	Vector3 i = new Vector3(screenX,screenY,0);
+    	Vector3 j = cam.unproject(i); //.scl(scale);
+    	selected.Move((int)j.x,(int)j.y);
         return false;
     }
 

@@ -1,5 +1,9 @@
 package com.libgdx.battlecommander;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -8,9 +12,39 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Soldier extends Actor implements Unit{
 
+	private Texture sTex;
+	private float x,y,nextx,nexty;
+	private SpriteBatch sb;
+	private Sprite sSprite;
+	
+	public Soldier(SpriteBatch globalSpriteBatch){
+		System.out.println("Soldier spawned!");
+		sb = globalSpriteBatch;
+		sTex = new Texture(Gdx.files.internal("SoldierC.png"));
+		sSprite = new Sprite(sTex);
+		sSprite.setOriginCenter();
+		sSprite.setX(x);
+		sSprite.setY(y);
+	}
+	public void render(){
+		sSprite.draw(sb);
+	}
+	
+	@Override
+	public void spawn(int coordX, int coordY) {
+		x=coordX;
+		y=coordY;
+	}
+	
 	@Override
 	public boolean Move(int coordA, int coordB) {
-		// TODO Auto-generated method stub
+		nextx = coordA;
+		nexty = coordB;
+		x=nextx;
+		y=nexty;
+		
+		sSprite.setX(x);
+		sSprite.setY(y);
 		return false;
 	}
 
@@ -44,10 +78,6 @@ public class Soldier extends Actor implements Unit{
 		
 	}
 
-	@Override
-	public void spawn(int coordA, int coordB) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }

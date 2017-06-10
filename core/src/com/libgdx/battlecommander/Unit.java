@@ -10,7 +10,7 @@ public interface Unit{
 	-Plays movement animations.
 	====================
 	*/
-	public void spawn(int coordA,int coordB);
+	public void spawn(int coordX,int coordY);
 	/*
 	====================
 	Move
@@ -18,7 +18,7 @@ public interface Unit{
 	-Plays movement animations.
 	====================
 	*/
-	public boolean Move(int coordA, int coordB);
+	public boolean Move(int coordX, int coordY);
 	
 	/*
 	====================
@@ -26,7 +26,7 @@ public interface Unit{
 	-Checks if a target is within range, 
 	====================
 	*/
-	public boolean Attack(int coordA,int coordB,int[] range);
+	public boolean Attack(int coordX,int coordY,int[] range);
 	
 	/*
 	====================
