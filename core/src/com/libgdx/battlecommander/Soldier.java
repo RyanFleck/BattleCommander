@@ -83,7 +83,7 @@ public class Soldier extends Actor implements Unit{
 	
 	@Override
 	public boolean Move(int coordA, int coordB) {
-		if(xMovLock==true && yMovLock==true){
+		if(xMovLock==true && yMovLock==true &&(( (Math.abs(x-coordA))>20 )||( (Math.abs(y-coordB))>20 ))){
 			
 		
 		nextx = Math.round(coordA);
