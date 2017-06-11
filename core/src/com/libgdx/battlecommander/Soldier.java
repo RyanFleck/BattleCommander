@@ -15,12 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Soldier extends Actor implements Unit{
 
-	private Texture sTex;
+	private Texture sTex,sTexMov;
 	private float x,y,nextx,nexty,xdis=0,ydis=0,speed,pitchVar;
 	private long stepID;
 	private SpriteBatch sb;
-	private Sprite sSprite;
-	private boolean xMovLock=true,yMovLock=true;
+	private Sprite sSprite,sSpriteMov;
+	private boolean xMovLock=true,yMovLock=true,moving=false;
 	private Sound step;
 	private Random r;
 	
@@ -31,10 +31,16 @@ public class Soldier extends Actor implements Unit{
 		nexty=y;
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
+		
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierC.png"));
 		sSprite = new Sprite(sTex);
+		sTexMov = new Texture(Gdx.files.internal("SoldierC/SoldierC.run.png"));
+		sSpriteMov = new Sprite(sTexMov);
+		
 		sSprite.setCenter(16, 16);
 		sSprite.setOriginCenter();
+		sSpriteMov.setCenter(16, 16);
+		sSpriteMov.setOriginCenter();
 		speed=5;
 		step = Gdx.audio.newSound(Gdx.files.internal("sound/step.wav"));
 		r = new Random();
@@ -43,54 +49,88 @@ public class Soldier extends Actor implements Unit{
 		//this.Move((int)x,(int)y);
 	}
 	public void render(){
+		if(moving){
+			System.out.println("Moving! At:"+x+","+y+" and moving to "+nextx+","+nexty+".");
 		if(x!=nextx && xMovLock==false){
+			System.out.println("Stepping in x plane...");
 			
 			step.setPitch(stepID, 1+pitchVar);
 			xdis= Math.abs(x-nextx);
-			if(xdis<=9){
+			if(xdis<=15){
 				xdis=0;
 				x=nextx;
 				xMovLock=true;}
-			else if(x>nextx)
+			if(x>nextx)
 				x-=speed;
-			else if(x<nextx)
+			if(x<nextx)
 				x+=speed;
 			
-		}else if(y!=nexty && yMovLock==false){
+		}
+		
+		if(y!=nexty && yMovLock==false){
+			System.out.println("Stepping in y plane...");
 			ydis= Math.abs(y-nexty);
-			if(ydis<=9){
+			if(ydis<=15){
 				ydis=0;
 				y=nexty;
 				yMovLock=true;
 			}
 			if(y>nexty)
 				y-=speed;
-			else if(y<nexty)
+			if(y<nexty)
 				y+=speed;
-		
+			
 			
 		}
 		
 		if(xMovLock==true && yMovLock==true){
 			step.stop();
-		}
+			moving=false;}
 		
+		if(y==nexty&&x==nextx){
+			xMovLock=true;
+			yMovLock=true;
+			step.stop();
+			moving=false;}
 		
+		sSpriteMov.setX(x);
+		sSpriteMov.setY(y);
+		sSpriteMov.draw(sb);
+		
+		}else{
+			
 		sSprite.setX(x);
 		sSprite.setY(y);
 		sSprite.draw(sb);
+		}
+		
+		
+		
 	}
 	
 	@Override
 	public boolean Move(int coordA, int coordB) {
-		if(xMovLock==true && yMovLock==true &&(( (Math.abs(x-coordA))>20 )||( (Math.abs(y-coordB))>20 ))){
+		if(moving==false &&(( (Math.abs(x-coordA))>10 )||( (Math.abs(y-coordB))>10 ))){
 			
 		
 		nextx = Math.round(coordA);
 		nexty = Math.round(coordB);
 		xMovLock=false;
 		yMovLock=false;
+		
+		//Flip sprite:
+		if(nextx>x){
+			sSprite.setFlip(false, false);
+			sSpriteMov.setFlip(false, false);}
+		else if(nextx<x){
+			sSprite.setFlip(true, false);
+			sSpriteMov.setFlip(true, false);}
+
+		
+		
 		System.out.println("Moving from ("+x+","+y+") to ("+nextx+","+nexty+").");
+		
+		//This bit at the bottom is for an audio delay while moving multiple units.
 		try {
 			long millis = r.nextInt(100);
 			Thread.sleep(millis);
@@ -99,7 +139,8 @@ public class Soldier extends Actor implements Unit{
 			e.printStackTrace();
 		}
 		stepID = step.loop();
-		return true;}else{return false;}
+		moving=true;
+		}return true;
 	}
 
 	@Override
