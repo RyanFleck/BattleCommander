@@ -51,7 +51,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		cam.update();
 		
 		//Initialize map.
-		map = new TmxMapLoader().load("VirtMap1.tmx");
+		map = new TmxMapLoader().load("DesertMap1.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		
 		Gdx.input.setInputProcessor(this);
@@ -173,7 +173,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
-
+ 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
