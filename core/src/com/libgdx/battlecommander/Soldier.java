@@ -32,9 +32,9 @@ public class Soldier extends Actor implements Unit{
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
 		
-		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierC.png"));
+		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
 		sSprite = new Sprite(sTex);
-		sTexMov = new Texture(Gdx.files.internal("SoldierC/SoldierC.run.png"));
+		sTexMov = new Texture(Gdx.files.internal("SoldierC/SoldierCd.run.png"));
 		sSpriteMov = new Sprite(sTexMov);
 		
 		sSprite.setCenter(16, 16);
