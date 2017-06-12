@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /**
  * @author rflec028
@@ -21,20 +23,30 @@ public class Soldier extends Actor implements Unit{
 	private long stepID;
 	private SpriteBatch sb;
 	private Sprite sSprite,sSpriteMov;
-	private boolean xMovLock=true,yMovLock=true,moving=false;
+	private boolean xMovLock=true,yMovLock=true,moving=false,selected=true;
 	private Sound step;
 	private Random r;
 	
-	
-	
-	public Soldier(SpriteBatch globalSpriteBatch,float spawnx,float spawny){
+	public Soldier(SpriteBatch globalSpriteBatch,int spawnx,int spawny, InputListener clickCheck){
 		x=spawnx;
 		y=spawny;
 		nextx=x;
 		nexty=y;
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
+		
+		//Make selectable:
 		setBounds(x,y,32,32);
+		addListener(clickCheck);
+		
+		addListener(new InputListener(){
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                ((Soldier)event.getTarget()).selected = true;
+                System.out.println("Soldier selected!");
+                return true;
+            }
+        });
+		
 		
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
 		sSprite = new Sprite(sTex);
@@ -52,7 +64,13 @@ public class Soldier extends Actor implements Unit{
 		
 		//this.Move((int)x,(int)y);
 	}
+	
+	
+
 	public void render(){
+		
+		
+		
 		if(moving){
 			System.out.println("Moving! At:"+x+","+y+" and moving to "+nextx+","+nexty+".");
 		if(x!=nextx && xMovLock==false){
@@ -71,7 +89,7 @@ public class Soldier extends Actor implements Unit{
 			
 		}
 		
-		else if(y!=nexty && yMovLock==false){
+		if(y!=nexty && yMovLock==false){
 			System.out.println("Stepping in y plane...");
 			ydis= Math.abs(y-nexty);
 			if(ydis<=15){

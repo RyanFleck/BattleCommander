@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /*
  * Resources used:
@@ -32,7 +33,8 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	private Soldier a,b,c;
 	private SpriteBatch sb;
-	
+	public InputListener clickCheck;
+	private int scaleTest=10;
 	
 	
 	
@@ -59,10 +61,13 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		//Sprite rendering:
 		sb = new SpriteBatch();
 		
+		//Select units:
+		clickCheck = new InputListener();
+		
 		//Soldier class test:
-		a= new Soldier(sb,50,30);
-		b= new Soldier(sb,100,30);
-		c= new Soldier(sb,150,30);
+		a= new Soldier(sb,50,30,clickCheck);
+		b= new Soldier(sb,100,30,clickCheck);
+		c= new Soldier(sb,150,30,clickCheck);
 
 		
 		
@@ -172,14 +177,16 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    	Vector3 i = new Vector3(screenX,screenY,0);
+    	
+    	/*Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i); //.scl(scale);
     	System.out.println("Movement:");
     	a.Move((int)j.x-16,(int)j.y-16);
     	//b.Move(2*(int)j.x/3,2*(int)j.y/3);
     	//c.Move((int)j.x/3,(int)j.y/3);
     	
-        return false;
+        return false;*/
+    	return false;
     }
 
     @Override
@@ -194,6 +201,13 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean scrolled(int amount) {
+    	System.out.println("Scrolled:"+amount+", scale:"+scaleTest);
+    	scaleTest+=amount;
+    	if(scaleTest<1){scaleTest=1;}
+    	w = Gdx.graphics.getWidth()*scaleTest/10;
+		h = Gdx.graphics.getHeight()*scaleTest/10;
+		cam.setToOrtho(false,w,h);
+		cam.update();
         return false;
     }
     
