@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /**
  * @author rflec028
@@ -34,8 +36,15 @@ public class Soldier extends Actor implements Unit{
 		sb = globalSpriteBatch;
 		
 		//Make selectable:
-		setBounds(x,y,32,32);
-		
+		setBounds(x,y,64,64);
+		addListener(new InputListener(){
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Soldier clicked!");
+                ((Soldier)event.getTarget()).Move(100,100);
+                return true;
+            }
+            
+        });
 		
 		
 		

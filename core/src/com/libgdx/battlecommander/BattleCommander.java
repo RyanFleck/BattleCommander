@@ -1,6 +1,7 @@
 package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /*
  * Resources used:
@@ -20,7 +22,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
  * */
 
 
-public class BattleCommander extends ApplicationAdapter implements InputProcessor {
+public class BattleCommander extends ApplicationAdapter implements InputProcessor, ApplicationListener{
 	
 	//Map and camera:
 	private TiledMap map;
@@ -32,6 +34,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	private Soldier a,b,c;
 	private SpriteBatch sb;
 	private int scaleTest=10;
+	private Stage battleField;
 	
 	
 	
@@ -43,6 +46,9 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		//Query width and height of window.
 		w = Gdx.graphics.getWidth()/scale;
 		h = Gdx.graphics.getHeight()/scale;
+		battleField = new Stage();
+		
+		
 		
 		//Initialize camera.
 		cam = new OrthographicCamera();
@@ -63,6 +69,11 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		a= new Soldier(sb,50,30);
 		b= new Soldier(sb,100,30);
 		c= new Soldier(sb,150,30);
+		
+		battleField.addActor(a);
+		battleField.addActor(b);
+		battleField.addActor(c);
+		
 
 		
 		
@@ -78,6 +89,10 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	@Override
 	public void dispose () {
 		
+		//Not that leaks matter at this point, but:
+		battleField.dispose();
+		map.dispose();
+		sb.dispose();
 
 	}
 	
@@ -99,6 +114,9 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    
+	    battleField.draw();
+	    
 	    cam.update();
 	    mapRenderer.setView(cam);
 	    mapRenderer.render();
@@ -186,7 +204,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-    	System.out.println("TouchDragged at: ("+screenX+","+screenY+"  pointer:"+pointer);
+    	//System.out.println("TouchDragged at: ("+screenX+","+screenY+"  pointer:"+pointer);
         return false;
     }
  
