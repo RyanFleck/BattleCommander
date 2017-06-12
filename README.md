@@ -1,4 +1,4 @@
-# Battle Commander
+![test](https://github.com/RyanFleck/BattleCommander/blob/54d1960009d8b000c4429bbd3fd6693c40847e8e/core/assets/BCOMLOGO.png?raw=true)
 ### Simple strategy game built using LibGDX.
 
 Designed by Ryan Fleck. Programmed by Saimoon Azad and Ryan Fleck. Artwork by Ryan.
