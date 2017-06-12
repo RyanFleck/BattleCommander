@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /*
  * Resources used:
@@ -32,7 +31,6 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 	
 	private Soldier a,b,c;
 	private SpriteBatch sb;
-	public InputListener clickCheck;
 	private int scaleTest=10;
 	
 	
