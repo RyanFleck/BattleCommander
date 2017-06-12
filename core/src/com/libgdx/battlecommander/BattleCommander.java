@@ -133,6 +133,19 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
             cam.translate(0,32);
         if(keycode == Input.Keys.DOWN)
             cam.translate(0,-32);
+        
+      //Map movement.
+    	System.out.println(keycode);
+        if(keycode == Input.Keys.W)
+        	a.Move((int)a.x,(int)a.y+32);
+        if(keycode == Input.Keys.A)
+        	a.Move((int)a.x-32,(int)a.y);
+        if(keycode == Input.Keys.S)
+        	a.Move((int)a.x,(int)a.y-32);
+        if(keycode == Input.Keys.D)
+        	a.Move((int)a.x+32,(int)a.y);
+        
+        a.Move(0,0);
        
         if(keycode == Input.Keys.EQUALS || keycode == Input.Keys.PLUS)
         	zoomIn();
@@ -162,7 +175,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
     	Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i); //.scl(scale);
     	System.out.println("Movement:");
-    	a.Move((int)j.x,(int)j.y);
+    	a.Move((int)j.x-16,(int)j.y-16);
     	//b.Move(2*(int)j.x/3,2*(int)j.y/3);
     	//c.Move((int)j.x/3,(int)j.y/3);
     	

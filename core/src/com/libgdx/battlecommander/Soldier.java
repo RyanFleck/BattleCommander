@@ -16,13 +16,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Soldier extends Actor implements Unit{
 
 	private Texture sTex,sTexMov;
-	private float x,y,nextx,nexty,xdis=0,ydis=0,speed,pitchVar;
+	public float x,y;
+	private float nextx,nexty,xdis=0,ydis=0,speed,pitchVar;
 	private long stepID;
 	private SpriteBatch sb;
 	private Sprite sSprite,sSpriteMov;
 	private boolean xMovLock=true,yMovLock=true,moving=false;
 	private Sound step;
 	private Random r;
+	
+	
 	
 	public Soldier(SpriteBatch globalSpriteBatch,float spawnx,float spawny){
 		x=spawnx;
@@ -31,6 +34,7 @@ public class Soldier extends Actor implements Unit{
 		nexty=y;
 		System.out.println("Soldier spawned!");
 		sb = globalSpriteBatch;
+		setBounds(x,y,32,32);
 		
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
 		sSprite = new Sprite(sTex);
@@ -67,7 +71,7 @@ public class Soldier extends Actor implements Unit{
 			
 		}
 		
-		if(y!=nexty && yMovLock==false){
+		else if(y!=nexty && yMovLock==false){
 			System.out.println("Stepping in y plane...");
 			ydis= Math.abs(y-nexty);
 			if(ydis<=15){
