@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 /*
@@ -61,13 +60,11 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 		//Sprite rendering:
 		sb = new SpriteBatch();
 		
-		//Select units:
-		clickCheck = new InputListener();
 		
 		//Soldier class test:
-		a= new Soldier(sb,50,30,clickCheck);
-		b= new Soldier(sb,100,30,clickCheck);
-		c= new Soldier(sb,150,30,clickCheck);
+		a= new Soldier(sb,50,30);
+		b= new Soldier(sb,100,30);
+		c= new Soldier(sb,150,30);
 
 		
 		
@@ -191,6 +188,7 @@ public class BattleCommander extends ApplicationAdapter implements InputProcesso
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+    	System.out.println("TouchDragged at: ("+screenX+","+screenY+"  pointer:"+pointer);
         return false;
     }
  

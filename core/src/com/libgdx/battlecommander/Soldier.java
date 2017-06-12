@@ -23,11 +23,11 @@ public class Soldier extends Actor implements Unit{
 	private long stepID;
 	private SpriteBatch sb;
 	private Sprite sSprite,sSpriteMov;
-	private boolean xMovLock=true,yMovLock=true,moving=false,selected=true;
+	private boolean xMovLock=true,yMovLock=true,moving=false;
 	private Sound step;
 	private Random r;
 	
-	public Soldier(SpriteBatch globalSpriteBatch,int spawnx,int spawny, InputListener clickCheck){
+	public Soldier(SpriteBatch globalSpriteBatch,int spawnx,int spawny){
 		x=spawnx;
 		y=spawny;
 		nextx=x;
@@ -37,15 +37,9 @@ public class Soldier extends Actor implements Unit{
 		
 		//Make selectable:
 		setBounds(x,y,32,32);
-		addListener(clickCheck);
 		
-		addListener(new InputListener(){
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                ((Soldier)event.getTarget()).selected = true;
-                System.out.println("Soldier selected!");
-                return true;
-            }
-        });
+		
+		
 		
 		
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
