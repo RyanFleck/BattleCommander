@@ -184,7 +184,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 		adjustVars();//Accounts for input and performs respective actions.
 		
 		//Clear frame:
-		Gdx.gl.glClearColor(0.15f,0.15f,0.15f,1);
+		Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
       

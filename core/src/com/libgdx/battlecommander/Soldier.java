@@ -88,7 +88,7 @@ public class Soldier extends Actor implements Unit{
 			//Snap coordinates to squares:
 			Db("X:"+destX+" X/32:"+(destX%32)+".");
 			destX=destX-(destX%32);
-			destY=destY-(destY%32);
+			destY=destY-(destY%32)+3;
 			
 			
 			//Movement action:
