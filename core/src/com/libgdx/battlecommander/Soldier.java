@@ -46,10 +46,7 @@ public class Soldier extends Actor implements Unit{
 		((Soldier)event.getTarget()).RecieveFocus();
 		return true;}});
 		
-		getX();
-		//Instantiate movement sequence:
-		//movAct = new MoveToAction();
-		
+				
 		
 		
 	}
@@ -68,7 +65,7 @@ public class Soldier extends Actor implements Unit{
 			movAct.setPosition(  (coordX/2)-16, ((Gdx.graphics.getHeight()-coordY)/2)-16);
 			//double distance = Math.sqrt(  coordX^2 + coordY^2  );
 			//movAct.setDuration((float) (distance*10));
-			movAct.setDuration(.1f);
+			movAct.setDuration(3f);
 			
 			Soldier.this.addAction(movAct);
 		}else{
