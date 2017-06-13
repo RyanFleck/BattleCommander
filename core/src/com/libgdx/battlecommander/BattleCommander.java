@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /*
@@ -65,6 +66,9 @@ public class BattleCommander implements ApplicationListener{
 	//TILED Map data:
 	private TiledMap map;
 	private TiledMapRenderer mapRend;
+	
+	//STAGE Initialization:
+	private Stage stage;
 	
 	
 	@Override
@@ -120,9 +124,17 @@ public class BattleCommander implements ApplicationListener{
         map = new TmxMapLoader().load("DesertMap1.tmx");
         mapRend = new OrthogonalTiledMapRenderer(map);
         
+        //Instantiating stage:
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        Soldier a = new Soldier();
+        stage.addActor(a);
+        
         
 		
 	}
+	
+	
 
 	@Override
 	public void resize(int width, int height){
@@ -149,6 +161,8 @@ public class BattleCommander implements ApplicationListener{
         mapRend.setView(cam);
         mapRend.render();
         
+        //Render stage:
+        stage.draw();
         
         
         //RENDER OVERLAYS
@@ -207,6 +221,7 @@ public class BattleCommander implements ApplicationListener{
 		sb.dispose();
 		text.dispose();
 		BCOMLogo.dispose();
+		stage.dispose();
 		
 		
 	}
