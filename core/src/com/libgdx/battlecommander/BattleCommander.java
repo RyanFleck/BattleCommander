@@ -1,8 +1,11 @@
 package com.libgdx.battlecommander;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
  * Resources used:
@@ -12,55 +15,64 @@ import com.badlogic.gdx.InputProcessor;
  * */
 
 
-public class BattleCommander extends ApplicationAdapter implements InputProcessor, ApplicationListener{
+public class BattleCommander implements ApplicationListener{
 
+	//HelloWorld
+	private SpriteBatch sb;
+	private BitmapFont text;
+	
+	
 	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+	public void create() {
+		//HelloWorld
+		sb = new SpriteBatch();
+		text = new BitmapFont();
+		text.setColor(Color.WHITE);
+		
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+	public void resize(int width, int height) {
+		
+		
 	}
 
 	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
+	public void render() {
+		
+		//Set background color:
+		
+		Gdx.gl.glClearColor(0.1f,0.1f,0.1f,1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		
+        
+        //Use sprite-batch to draw.
+        sb.begin();
+        text.draw(sb,"Battle Commander ALPHA ver 0.2.0",10,10);
+        //text.draw(sb,"Ryan Fleck 2017",50,80);
+        sb.end();
+		
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	public void pause() {
+		
+		
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+	public void resume() {
+		
+		
 	}
 
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
+	public void dispose() {
+		sb.dispose();
+		text.dispose();
+		
 	}
 
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	
 	
