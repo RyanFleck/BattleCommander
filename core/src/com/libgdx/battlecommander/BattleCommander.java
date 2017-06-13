@@ -2,6 +2,7 @@ package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -64,6 +66,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	
 	//Orthographic cameras:
 	private OrthographicCamera cam;
+	private float camspeed = 32f;
 	
 	//TILED Map data:
 	private TiledMap map;
@@ -269,7 +272,20 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	@Override
 	public boolean keyTyped(char character) {
 		Db("TYPED: "+character);
-
+		
+		//Exit game. TODO Remove when testing is complete.
+		if (Gdx.input.isKeyPressed(Keys.Q))
+	        Gdx.app.exit();
+		
+		//Pan map.
+		if (Gdx.input.isKeyPressed(Keys.W))
+	        cam.translate(0, camspeed);
+		if (Gdx.input.isKeyPressed(Keys.A))
+			cam.translate(-camspeed, 0);
+		if (Gdx.input.isKeyPressed(Keys.S))
+			cam.translate(0, -camspeed);
+		if (Gdx.input.isKeyPressed(Keys.D))
+			cam.translate(camspeed, 0);
 		return false;
 	}
 
@@ -277,7 +293,9 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		a.Move(screenX, screenY);
+		Vector3 i = new Vector3(screenX,screenY,0);
+    	Vector3 j = cam.unproject(i);
+    	a.Move((int)j.x-16,(int)j.y-16);
 		return false;
 	}
 

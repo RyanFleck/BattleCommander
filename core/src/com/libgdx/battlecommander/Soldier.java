@@ -62,7 +62,8 @@ public class Soldier extends Actor implements Unit{
 			//inMotion=true;
 			Db("Moving to: "+coordX+","+coordY);
 			MoveToAction movAct = new MoveToAction();
-			movAct.setPosition(  (coordX/2)-16, ((Gdx.graphics.getHeight()-coordY)/2)-16);
+			movAct.setPosition(coordX, coordY);
+			//movAct.setPosition(  (coordX/2)-16, ((Gdx.graphics.getHeight()-coordY)/2)-16);
 			//double distance = Math.sqrt(  coordX^2 + coordY^2  );
 			//movAct.setDuration((float) (distance*10));
 			movAct.setDuration(3f);
