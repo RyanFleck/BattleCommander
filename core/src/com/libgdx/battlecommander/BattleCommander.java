@@ -116,8 +116,9 @@ public class BattleCommander implements ApplicationListener{
         cursPixmap.dispose();
         
         //Instantiating camera:
-        cam = new OrthographicCamera(1280,720);
+        cam = new OrthographicCamera(winX,winY);
         cam.setToOrtho(false,winX,winY);
+        cam.zoom = 1;
         cam.update();
         
         //Instantiating map:
@@ -162,6 +163,7 @@ public class BattleCommander implements ApplicationListener{
         mapRend.render();
         
         //Render stage:
+        stage.getViewport().setCamera(cam);
         stage.draw();
         
         
