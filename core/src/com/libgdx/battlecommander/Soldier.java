@@ -70,7 +70,7 @@ public class Soldier extends Actor implements Unit{
 			destX=coordX;
 			destY=coordY;
 			
-			//Flip texture if moving towards 0:
+			//Flip texture if moving left/right:
 			if(getX()>coordX)
 				sSprite.setFlip(true, false);
 			else
@@ -81,7 +81,7 @@ public class Soldier extends Actor implements Unit{
 			MoveToAction movAct = new MoveToAction();
 			movAct.setPosition(coordX, coordY);
 			Vector2 i = new Vector2((coordX-getX()),(coordY-getY()));
-			movAct.setDuration(i.len()/100);
+			movAct.setDuration(i.len()/300);
 			Soldier.this.addAction(movAct);
 		}else{
 			Db("Command ignored, soldier is in motion.");
