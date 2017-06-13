@@ -311,7 +311,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i);
-    	a.Move((int)j.x-16,(int)j.y-16);
+    	a.Move((int)j.x,(int)j.y);
 		return false;
 	}
 

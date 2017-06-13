@@ -85,12 +85,17 @@ public class Soldier extends Actor implements Unit{
 				sSprite.setFlip(false, false);
 				sSpriteR.setFlip(false, false);
 			}
+			//Snap coordinates to squares:
+			Db("X:"+destX+" X/32:"+(destX%32)+".");
+			destX=destX-(destX%32);
+			destY=destY-(destY%32);
+			
 			
 			//Movement action:
-			Db("Moving to: "+coordX+","+coordY);
+			Db("Moving to: "+destX+","+destY);
 			MoveToAction movAct = new MoveToAction();
-			movAct.setPosition(coordX, coordY);
-			Vector2 i = new Vector2((coordX-getX()),(coordY-getY()));
+			movAct.setPosition(destX, destY);
+			Vector2 i = new Vector2((destX-getX()),(destY-getY()));
 			movAct.setDuration(i.len()/300);
 			Soldier.this.addAction(movAct);
 		}else{
