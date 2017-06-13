@@ -3,6 +3,7 @@ package com.libgdx.battlecommander;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,6 +21,7 @@ public class Soldier extends Actor implements Unit{
 	
 	//Visual:
 	private Texture sTex;
+	private Sprite sSprite;
 	
 	//Soldier data:
 	public boolean selected;
@@ -35,6 +37,7 @@ public class Soldier extends Actor implements Unit{
 		selected=false;
 		inMotion=false;
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
+		sSprite = new Sprite(sTex);
 		sizeX=sTex.getWidth();
 		sizeY=sTex.getHeight();
 		
@@ -55,15 +58,25 @@ public class Soldier extends Actor implements Unit{
 
 	@Override 
 	public void draw(Batch batch, float alpha){
-        batch.draw(sTex,getX(),getY(),sizeX,sizeY);
+        batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
     }
 		
 	@Override
 	public boolean Move(int coordX, int coordY) {
 		if(!inMotion){
+			
+			//Prevent simultaneous actions:
 			inMotion=true;
 			destX=coordX;
 			destY=coordY;
+			
+			//Flip texture if moving towards 0:
+			if(getX()>coordX)
+				sSprite.setFlip(true, false);
+			else
+				sSprite.setFlip(false, false);
+			
+			//Movement action:
 			Db("Moving to: "+coordX+","+coordY);
 			MoveToAction movAct = new MoveToAction();
 			movAct.setPosition(coordX, coordY);
@@ -73,6 +86,8 @@ public class Soldier extends Actor implements Unit{
 		}else{
 			Db("Command ignored, soldier is in motion.");
 		}
+		
+		
 		return true;
 	}
 	
