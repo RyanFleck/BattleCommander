@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /*
@@ -71,6 +72,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	
 	//STAGE Initialization:
 	private Stage stage;
+	private Soldier a;
 	
 	
 	@Override
@@ -129,14 +131,15 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
         
         //Instantiating stage:
         stage = new Stage();
-        Soldier a = new Soldier();
+        a = new Soldier();
         stage.addActor(a);
         
+        
         //Setting up input processors:
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(stage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        InputMultiplexer inpMx = new InputMultiplexer();
+        inpMx.addProcessor(this);
+        inpMx.addProcessor(stage);
+        Gdx.input.setInputProcessor(inpMx);
         
         
         
@@ -152,6 +155,8 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 		float logoX = (width-BCOMSprite.getWidth());
         float logoY = (height-BCOMSprite.getHeight());
         BCOMSprite.setPosition(logoX,logoY);
+        winX=Gdx.graphics.getWidth();
+		winY=Gdx.graphics.getHeight();
 		
 	}
 
@@ -261,23 +266,13 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
-		Db(""+keycode);
+		Db("KEYDOWN:"+keycode);
 		return false;
 	}
-
-
-
-	@Override
-	public boolean keyUp(int keycode) {
-		Db(""+keycode);
-		return false;
-	}
-
-
 
 	@Override
 	public boolean keyTyped(char character) {
-		Db(""+character);
+		Db("TYPED: "+character);
 		return false;
 	}
 
@@ -285,7 +280,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -293,7 +288,12 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		Db("Clicked: "+screenX+","+screenY);
+		Db("Clicked: "+screenX+","+screenY+", moving soldier...");
+		MoveToAction movAct = new MoveToAction();
+		movAct.setPosition(screenX, screenY);
+		double distance = Math.sqrt(  screenX^2 + screenY^2  );
+		movAct.setDuration((float) (distance*0.1));
+		a.addAction(movAct);
 		return false;
 	}
 
@@ -317,6 +317,14 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 
 	@Override
 	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
 		return false;
 	}

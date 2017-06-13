@@ -42,15 +42,17 @@ public class Soldier extends Actor implements Unit{
     }
 	@Override
     public void act(float delta){
-        if(selected){
-        	sx+=5;
-            sy+=3;
-        }
+        
     }
 	
 	@Override
 	public boolean Move(int coordX, int coordY) {
 		MoveToAction movAct = new MoveToAction();
+		movAct.setPosition(coordX, coordY);
+		double distance = Math.sqrt(  coordX^2 + coordY^2  );
+		movAct.setDuration((float) (distance*0.1));
+		addAction(movAct);
+		
 		
 		return false;
 	}
