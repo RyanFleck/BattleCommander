@@ -72,9 +72,12 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	private TiledMap map;
 	private TiledMapRenderer mapRend;
 	
+	//Input processing:
+	private InputMultiplexer inpMx;
+	
 	//STAGE Initialization:
 	private Stage stage;
-	private Soldier a;
+	private Soldier a,b,c,d,e;
 	
 	
 	@Override
@@ -135,11 +138,24 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
         //Instantiating stage:
         stage = new Stage();
         a = new Soldier();
+        b = new Soldier();
+        c = new Soldier();
+        d = new Soldier();
+        e = new Soldier();
         stage.addActor(a);
+        stage.addActor(b);
+        stage.addActor(c);
+        stage.addActor(d);
+        stage.addActor(e);
+        a.Move(100, 100);
+        b.Move(200, 100);
+        c.Move(300, 100);
+        d.Move(400, 100);
+        e.Move(500, 100);
                 
         
         //Setting up input processors:
-        InputMultiplexer inpMx = new InputMultiplexer();
+        inpMx = new InputMultiplexer();
         inpMx.addProcessor(this);
         inpMx.addProcessor(stage);
         Gdx.input.setInputProcessor(inpMx);

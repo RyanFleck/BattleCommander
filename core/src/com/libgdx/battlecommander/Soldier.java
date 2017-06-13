@@ -22,6 +22,8 @@ public class Soldier extends Actor implements Unit{
 	//Visual:
 	private Texture sTex;
 	private Sprite sSprite;
+	private Texture sTexR; //Running.
+	private Sprite sSpriteR;
 	
 	//Soldier data:
 	public boolean selected;
@@ -38,6 +40,8 @@ public class Soldier extends Actor implements Unit{
 		inMotion=false;
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
 		sSprite = new Sprite(sTex);
+		sTexR = new Texture(Gdx.files.internal("SoldierC/SoldierCd.run.png"));
+		sSpriteR = new Sprite(sTexR);
 		sizeX=sTex.getWidth();
 		sizeY=sTex.getHeight();
 		
@@ -58,7 +62,10 @@ public class Soldier extends Actor implements Unit{
 
 	@Override 
 	public void draw(Batch batch, float alpha){
-        batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
+		if(inMotion)
+			batch.draw(sSpriteR,getX(),getY(),sizeX,sizeY);
+		else
+			batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
     }
 		
 	@Override
@@ -71,10 +78,13 @@ public class Soldier extends Actor implements Unit{
 			destY=coordY;
 			
 			//Flip texture if moving left/right:
-			if(getX()>coordX)
+			if(getX()>coordX){
 				sSprite.setFlip(true, false);
-			else
+				sSpriteR.setFlip(true, false);
+			}else{
 				sSprite.setFlip(false, false);
+				sSpriteR.setFlip(false, false);
+			}
 			
 			//Movement action:
 			Db("Moving to: "+coordX+","+coordY);
