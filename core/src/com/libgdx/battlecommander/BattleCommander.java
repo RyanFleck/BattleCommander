@@ -89,7 +89,7 @@ public class BattleCommander implements ApplicationListener{
         
         
         //Draw dynamic texture:
-        crosshairSpr.setPosition((Gdx.graphics.getWidth()/2)-64,(Gdx.graphics.getHeight()/2)-64 );
+        crosshairSpr.setPosition((Gdx.graphics.getWidth()-150),10);
         crosshairSpr.draw(sb);
         
         //Draw logo in upper right corner:
