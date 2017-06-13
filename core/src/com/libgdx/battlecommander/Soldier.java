@@ -25,25 +25,38 @@ public class Soldier extends Actor implements Unit{
 	private Texture sTexR; //Running.
 	private Sprite sSpriteR;
 	
+	//Overhead info:
+	//private BitmapFont text;
+	//private FrameBuffer textGen;
+	
 	//Soldier data:
-	public boolean selected;
-	public boolean inMotion;
-	public float destX,destY;
+	private boolean selected;
+	private boolean inMotion;
+	private float destX,destY;
+	private String sName;
+	private BattleCommander bcom;
 	
 	//Action data:
 	//private MoveToAction movAct;
 	
-	public Soldier() {
+	public Soldier(String name,BattleCommander bcommand) {
 		
 		//Initialize basic variables:
-		selected=false;
-		inMotion=false;
-		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
-		sSprite = new Sprite(sTex);
-		sTexR = new Texture(Gdx.files.internal("SoldierC/SoldierCd.run.png"));
-		sSpriteR = new Sprite(sTexR);
-		sizeX=sTex.getWidth();
-		sizeY=sTex.getHeight();
+		sName		= name;
+		bcom		= bcommand;
+		selected	= true;
+		inMotion	= false;
+		sTex 		= new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
+		sSprite 	= new Sprite(sTex);
+		sTexR 		= new Texture(Gdx.files.internal("SoldierC/SoldierCd.run.png"));
+		sSpriteR 	= new Sprite(sTexR);
+		sizeX		= sTex.getWidth();
+		sizeY		= sTex.getHeight();
+		
+		//Statistic display instantiation:
+		//text = new BitmapFont();
+		//text.setColor(Color.CYAN);
+		//textGen = new FrameBuffer(null, 32,32, true);
 		
 		//System to check if mouse clicks unit:
 		setBounds(getX(),getY(),sizeX,sizeY);
@@ -51,8 +64,11 @@ public class Soldier extends Actor implements Unit{
 		new InputListener(){
 		@Override
 		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-		((Soldier)event.getTarget()).selected = true;
+		
+		//Change system focus.
+		bcom.getFocusedUnit().LoseFocus();
 		((Soldier)event.getTarget()).RecieveFocus();
+		bcom.setFocusedUnit(((Soldier)event.getTarget()));
 		return true;}});
 		
 				
@@ -60,20 +76,23 @@ public class Soldier extends Actor implements Unit{
 		
 	}
 
+
 	@Override 
 	public void draw(Batch batch, float alpha){
 		if(inMotion)
 			batch.draw(sSpriteR,getX(),getY(),sizeX,sizeY);
+			
 		else
 			batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
     }
 		
 	@Override
 	public boolean Move(int coordX, int coordY) {
-		if(!inMotion){
+		if(!inMotion && selected){
 			
 			//Prevent simultaneous actions:
 			inMotion=true;
+			selected=false;
 			destX=coordX;
 			destY=coordY;
 			
@@ -86,7 +105,6 @@ public class Soldier extends Actor implements Unit{
 				sSpriteR.setFlip(false, false);
 			}
 			//Snap coordinates to squares:
-			Db("X:"+destX+" X/32:"+(destX%32)+".");
 			destX=destX-(destX%32);
 			destY=destY-(destY%32)+3;
 			
@@ -122,11 +140,14 @@ public class Soldier extends Actor implements Unit{
 	@Override
 	public boolean RecieveFocus() {
 		Db("Focus attained!");
+		selected=true;
 		return false;
 	}
 
 	@Override
 	public boolean LoseFocus() {
+		Db("Focus lost!");
+		selected=false;
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -144,7 +165,7 @@ public class Soldier extends Actor implements Unit{
 	}
 
 	public void Db(String message) {
-		System.out.println("Soldier.java DEBUGMSG: "+message);
+		System.out.println(sName+" DEBUGMSG: "+message);
 	}
 	
 	

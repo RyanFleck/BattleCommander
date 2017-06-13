@@ -78,6 +78,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	//STAGE Initialization:
 	private Stage stage;
 	private Soldier a,b,c,d,e;
+	private Unit focusedUnit;
 	
 	
 	@Override
@@ -137,11 +138,11 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
         
         //Instantiating stage:
         stage = new Stage();
-        a = new Soldier();
-        b = new Soldier();
-        c = new Soldier();
-        d = new Soldier();
-        e = new Soldier();
+        a = new Soldier("Lt.Dan",this);
+        b = new Soldier("Pvt.Steve",this);
+        c = new Soldier("Pvt.Carl",this);
+        d = new Soldier("Pvt.Jenkins",this);
+        e = new Soldier("Pvt.Wilbrod",this);
         stage.addActor(a);
         stage.addActor(b);
         stage.addActor(c);
@@ -152,6 +153,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
         c.Move(300, 100);
         d.Move(400, 100);
         e.Move(500, 100);
+        setFocusedUnit(a);
                 
         
         //Setting up input processors:
@@ -225,6 +227,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
         
         
         sb.end();//End sprite-batch creation...................................
+        
 		
 	}
 
@@ -278,6 +281,18 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	 */
 
 
+	public Unit getFocusedUnit() {
+		return focusedUnit;
+	}
+
+
+
+	public void setFocusedUnit(Unit focusedUnit) {
+		this.focusedUnit = focusedUnit;
+	}
+
+
+
 	@Override
 	public boolean keyDown(int keycode) {
 		Db("KEYDOWN:"+keycode);
@@ -311,7 +326,7 @@ public class BattleCommander implements ApplicationListener,InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 i = new Vector3(screenX,screenY,0);
     	Vector3 j = cam.unproject(i);
-    	a.Move((int)j.x,(int)j.y);
+    	focusedUnit.Move((int)j.x,(int)j.y);
 		return false;
 	}
 
