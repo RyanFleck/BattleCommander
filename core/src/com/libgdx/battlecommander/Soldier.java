@@ -3,6 +3,7 @@ package com.libgdx.battlecommander;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,6 +24,7 @@ public class Soldier extends Actor implements Unit{
 	//Soldier data:
 	public boolean selected;
 	public boolean inMotion;
+	public float destX,destY;
 	
 	//Action data:
 	//private MoveToAction movAct;
@@ -59,15 +61,14 @@ public class Soldier extends Actor implements Unit{
 	@Override
 	public boolean Move(int coordX, int coordY) {
 		if(!inMotion){
-			//inMotion=true;
+			inMotion=true;
+			destX=coordX;
+			destY=coordY;
 			Db("Moving to: "+coordX+","+coordY);
 			MoveToAction movAct = new MoveToAction();
 			movAct.setPosition(coordX, coordY);
-			//movAct.setPosition(  (coordX/2)-16, ((Gdx.graphics.getHeight()-coordY)/2)-16);
-			//double distance = Math.sqrt(  coordX^2 + coordY^2  );
-			//movAct.setDuration((float) (distance*10));
-			movAct.setDuration(3f);
-			
+			Vector2 i = new Vector2((coordX-getX()),(coordY-getY()));
+			movAct.setDuration(i.len()/100);
 			Soldier.this.addAction(movAct);
 		}else{
 			Db("Command ignored, soldier is in motion.");
@@ -78,6 +79,8 @@ public class Soldier extends Actor implements Unit{
 	@Override
 	public void act(float delta) {
 	    super.act(delta);
+	    if(destX==getX() && destY==getY())
+	    	inMotion=false;
 	}
 	
 	@Override
