@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 
 
@@ -14,49 +14,74 @@ import com.badlogic.gdx.scenes.scene2d.actions.*;
 
 public class Soldier extends Actor implements Unit{
 	
-	//Soldier position and direction:
-	private int sx,sy;
+	//Soldier position, size(pixels) and direction:
+	private int sizeX,sizeY;
 	
 	//Visual:
 	private Texture sTex;
 	
 	//Soldier data:
 	public boolean selected;
+	public boolean inMotion;
+	
+	//Action data:
+	//private MoveToAction movAct;
 	
 	public Soldier() {
+		
+		//Initialize basic variables:
 		selected=false;
+		inMotion=false;
 		sTex = new Texture(Gdx.files.internal("SoldierC/SoldierCd.png"));
+		sizeX=sTex.getWidth();
+		sizeY=sTex.getHeight();
+		
 		//System to check if mouse clicks unit:
-		setBounds(sx,sy,32,32);
+		setBounds(getX(),getY(),sizeX,sizeY);
 		addListener(
 		new InputListener(){
+		@Override
 		public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 		((Soldier)event.getTarget()).selected = true;
 		((Soldier)event.getTarget()).RecieveFocus();
 		return true;}});
+		
+		getX();
+		//Instantiate movement sequence:
+		//movAct = new MoveToAction();
+		
+		
+		
 	}
 
 	@Override 
 	public void draw(Batch batch, float alpha){
-        batch.draw(sTex,sx,sy);
+        batch.draw(sTex,getX(),getY(),sizeX,sizeY);
     }
-	@Override
-    public void act(float delta){
-        
-    }
-	
+		
 	@Override
 	public boolean Move(int coordX, int coordY) {
-		MoveToAction movAct = new MoveToAction();
-		movAct.setPosition(coordX, coordY);
-		double distance = Math.sqrt(  coordX^2 + coordY^2  );
-		movAct.setDuration((float) (distance*0.1));
-		addAction(movAct);
-		
-		
-		return false;
+		if(!inMotion){
+			//inMotion=true;
+			Db("Moving to: "+coordX+","+coordY);
+			MoveToAction movAct = new MoveToAction();
+			movAct.setPosition(  (coordX/2)-16, ((Gdx.graphics.getHeight()-coordY)/2)-16);
+			//double distance = Math.sqrt(  coordX^2 + coordY^2  );
+			//movAct.setDuration((float) (distance*10));
+			movAct.setDuration(.1f);
+			
+			Soldier.this.addAction(movAct);
+		}else{
+			Db("Command ignored, soldier is in motion.");
+		}
+		return true;
 	}
-
+	
+	@Override
+	public void act(float delta) {
+	    super.act(delta);
+	}
+	
 	@Override
 	public boolean Attack(int coordX, int coordY, int[] range) {
 		// TODO Auto-generated method stub

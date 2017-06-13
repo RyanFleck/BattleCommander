@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.height = 720;
 		
 		//Ryan's temp configs:
-		config.resizable = true;
+		config.resizable = false;
 		config.backgroundFPS = 30;
 		config.foregroundFPS = 60;
 		config.useGL30 = true;
