@@ -30,7 +30,7 @@ public class BattleCommander implements ApplicationListener{
 	
 	//Frame monitoring:
 	private long frames;
-	private int fps;
+	private int fps=1;
 	private long time=0;
 	private String fString="",fpsString="";
 	
@@ -94,14 +94,26 @@ public class BattleCommander implements ApplicationListener{
 
 	@Override
 	public void render() {
-		
+		queryInput();//Checks keyboard and mouse for input.
+		adjustVars();//Accounts for input and performs respective actions.
 		//Set background color:
 		Gdx.gl.glClearColor(0.15f,0.15f,0.15f,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-        
+        //Potentially needed for when resizable window is implemented.
+        //winX=Gdx.graphics.getWidth();
+		//winY=Gdx.graphics.getHeight();
         
         sb.begin();//Use sprite-batch to draw..................................
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         //Draw dynamic texture:
@@ -113,13 +125,23 @@ public class BattleCommander implements ApplicationListener{
         
         //Draw version info:
         monitorFrames();
-        text.draw(sb,fString,10,winY-10);
-        text.draw(sb,fpsString,10,winY-20);
+        text.draw(sb,fString,10,winY-8);
+        text.draw(sb,fpsString,10,winY-22);
         text.draw(sb,versionString,50,50);
         text.draw(sb,"2017 Ryan Fleck",50,70);
         
         
         sb.end();//End sprite-batch creation...................................
+		
+	}
+
+	private void adjustVars() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void queryInput() {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -145,14 +167,14 @@ public class BattleCommander implements ApplicationListener{
 
 	public void monitorFrames() {
 		frames++;
-		fps++;
+		
 		fString=("Frame "+frames);
 		
 		if (TimeUtils.timeSinceNanos(time) > 1000000000) {
 			 time = TimeUtils.nanoTime();
 			 fpsString=("FPS: "+fps);
 			 fps=0;
-		}
+		}else{fps++;}
 	}
 
 	
