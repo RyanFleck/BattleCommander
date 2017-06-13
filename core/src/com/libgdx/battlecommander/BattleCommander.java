@@ -2,6 +2,8 @@ package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,7 +30,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  * */
 
 
-public class BattleCommander implements ApplicationListener{
+public class BattleCommander implements ApplicationListener,InputProcessor{
 	
 	
 	//Window parameters:
@@ -127,9 +129,14 @@ public class BattleCommander implements ApplicationListener{
         
         //Instantiating stage:
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
         Soldier a = new Soldier();
         stage.addActor(a);
+        
+        //Setting up input processors:
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         
         
         
@@ -248,6 +255,70 @@ public class BattleCommander implements ApplicationListener{
 	//Bare-bones debug-message printing solution.
 	public void Db(String message) {
 		System.out.println("BattleCommander.java DEBUGMSG: "+message);
+	}
+
+
+
+	@Override
+	public boolean keyDown(int keycode) {
+		Db(""+keycode);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean keyUp(int keycode) {
+		Db(""+keycode);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean keyTyped(char character) {
+		Db(""+character);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		Db("Clicked: "+screenX+","+screenY);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		Db("TouchDragged: "+screenX+","+screenY);
+		return false;
+	}
+
+
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	

@@ -43,7 +43,8 @@ public class Soldier extends Actor implements Unit{
 	@Override
     public void act(float delta){
         if(selected){
-            sx+=5;
+        	sx+=5;
+            sy+=3;
         }
     }
 	
