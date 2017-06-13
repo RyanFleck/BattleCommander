@@ -4,11 +4,16 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /*
@@ -50,15 +55,16 @@ public class BattleCommander implements ApplicationListener{
 	
 	//Cursor dynamic texture:
 	private Pixmap cursPixmap;
-	private Texture cursTex;
+	//private Texture cursTex;
 	//private Sprite cursorSprite;
 	//private float cursX,cursY;
 	
 	//Orthographic camera:
-	
+	private OrthographicCamera cam;
 	
 	//TILED Map data:
-	
+	private TiledMap map;
+	private TiledMapRenderer mapRend;
 	
 	
 	@Override
@@ -100,17 +106,31 @@ public class BattleCommander implements ApplicationListener{
   		cursPixmap.drawLine(0, 0, 3, 3);
   		cursPixmap.drawLine(32, 0, 29, 3);
   		cursPixmap.drawCircle(16, 16, 15);
-  		cursTex= new Texture(cursPixmap);
+  		//cursTex= new Texture(cursPixmap);
   		//cursorSprite= new Sprite(cursTex);
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursPixmap, 16, 16));
         cursPixmap.dispose();
+        
+        //Instantiating camera:
+        cam = new OrthographicCamera(1280,720);
+        cam.setToOrtho(false,winX,winY);
+        cam.update();
+        
+        //Instantiating map:
+        map = new TmxMapLoader().load("DesertMap1.tmx");
+        mapRend = new OrthogonalTiledMapRenderer(map);
+        
+        
 		
 	}
 
 	@Override
 	public void resize(int width, int height){
 		System.out.println("BCM: Resized window to "+width+" by "+height);
-		//cam.setToOrtho(false, width/scale, height/scale);
+		cam.setToOrtho(false, width, height);
+		float logoX = (width-BCOMSprite.getWidth());
+        float logoY = (height-BCOMSprite.getHeight());
+        BCOMSprite.setPosition(logoX,logoY);
 		
 	}
 
@@ -123,22 +143,18 @@ public class BattleCommander implements ApplicationListener{
 		Gdx.gl.glClearColor(0.15f,0.15f,0.15f,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-        //Potentially needed for when resizable window is implemented.
-        winX=Gdx.graphics.getWidth();
-		winY=Gdx.graphics.getHeight();
-        
-        sb.begin();//Use sprite-batch to draw..................................
-        
-        
+      
+        //Render map:
+        cam.update();
+        mapRend.setView(cam);
+        mapRend.render();
         
         
         
-        
-        
-        
-        
-        
-        
+        //RENDER OVERLAYS
+		sb.setProjectionMatrix(cam.combined);
+        sb.begin();//Use sprite-batch to draw overlay..........................
+
         //Draw dynamic texture:
         crosshairSpr.setPosition((winX-150),10);
         crosshairSpr.draw(sb);
@@ -192,6 +208,7 @@ public class BattleCommander implements ApplicationListener{
 		text.dispose();
 		BCOMLogo.dispose();
 		
+		
 	}
 
 	public void monitorFrames() {
@@ -204,6 +221,11 @@ public class BattleCommander implements ApplicationListener{
 			 fpsString=("FPS: "+fps);
 			 fps=0;
 		}else{fps++;}
+	}
+	
+	//Bare-bones debug-message printing solution.
+	public void Db(String message) {
+		System.out.println("BattleCommander.java DEBUGMSG: "+message);
 	}
 
 	
