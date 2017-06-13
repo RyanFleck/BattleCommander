@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 
 
 
@@ -39,10 +40,17 @@ public class Soldier extends Actor implements Unit{
 	public void draw(Batch batch, float alpha){
         batch.draw(sTex,sx,sy);
     }
+	@Override
+    public void act(float delta){
+        if(selected){
+            sx+=5;
+        }
+    }
 	
 	@Override
 	public boolean Move(int coordX, int coordY) {
-		// TODO Auto-generated method stub
+		MoveToAction movAct = new MoveToAction();
+		
 		return false;
 	}
 

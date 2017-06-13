@@ -60,7 +60,7 @@ public class BattleCommander implements ApplicationListener{
 	//private Sprite cursorSprite;
 	//private float cursX,cursY;
 	
-	//Orthographic camera:
+	//Orthographic cameras:
 	private OrthographicCamera cam;
 	
 	//TILED Map data:
@@ -132,6 +132,7 @@ public class BattleCommander implements ApplicationListener{
         stage.addActor(a);
         
         
+        
 		
 	}
 	
@@ -195,8 +196,12 @@ public class BattleCommander implements ApplicationListener{
 	}
 
 	private void adjustVars() {
-		winX=Gdx.graphics.getWidth();
-		winY=Gdx.graphics.getHeight();
+		//Adjust window size
+		//winX=Gdx.graphics.getWidth();
+		//winY=Gdx.graphics.getHeight();
+		
+		//Update stage:
+		stage.act(Gdx.graphics.getDeltaTime());
 		
 	}
 
