@@ -2,17 +2,7 @@ package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /*
  * Resources used:
@@ -23,224 +13,55 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class BattleCommander extends ApplicationAdapter implements InputProcessor, ApplicationListener{
-	
-	//Map and camera:
-	private TiledMap map;
-	private OrthographicCamera cam;
-	private TiledMapRenderer mapRenderer;
-	private float scale = 2;
-	private float w,h;
-	
-	private Soldier a,b,c;
-	private SpriteBatch sb;
-	private int scaleTest=10;
-	private Stage battleField;
-	
-	
-	
-	@Override
-	public void create () {
-		
-		
-		//BATTLE MAP INITIALIZATION:
-		//Query width and height of window.
-		w = Gdx.graphics.getWidth()/scale;
-		h = Gdx.graphics.getHeight()/scale;
-		battleField = new Stage();
-		
-		
-		
-		//Initialize camera.
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false,w,h);
-		cam.update();
-		
-		//Initialize map.
-		map = new TmxMapLoader().load("DesertMap1.tmx");
-		mapRenderer = new OrthogonalTiledMapRenderer(map);
-		
-		Gdx.input.setInputProcessor(this);
-		
-		//Sprite rendering:
-		sb = new SpriteBatch();
-		
-		
-		//Soldier class test:
-		a= new Soldier(sb,50,30);
-		b= new Soldier(sb,100,30);
-		c= new Soldier(sb,150,30);
-		
-		battleField.addActor(a);
-		battleField.addActor(b);
-		battleField.addActor(c);
-		
 
-		
-		
-		
+	@Override
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public void render () {
-		adjustVariables();
-		drawGraphics();
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
+
 	@Override
-	public void dispose () {
-		
-		//Not that leaks matter at this point, but:
-		battleField.dispose();
-		map.dispose();
-		sb.dispose();
-
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
+
 	@Override
-	public void resize(int width, int height){
-		System.out.println("Resized window to "+width+" by "+height);
-		cam.setToOrtho(false, width/scale, height/scale);
-		
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	public void adjustVariables(){
-		
-		
-	}
-	
-	public void drawGraphics(){
-		
-		//Map and background:
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    
-	    battleField.draw();
-	    
-	    cam.update();
-	    mapRenderer.setView(cam);
-	    mapRenderer.render();
-	    
-	    sb.setProjectionMatrix(cam.combined);
-	    sb.begin();
-	    
-	    a.render();
-	    b.render();
-	    c.render();
-	    
-	    sb.end();
-	    
-	    
-	}
-	
+
 	@Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public boolean keyUp(int keycode) {
-    	
-    	//Map movement.
-    	System.out.println(keycode);
-        if(keycode == Input.Keys.LEFT)
-            cam.translate(-32,0);
-        if(keycode == Input.Keys.RIGHT)
-            cam.translate(32,0);
-        if(keycode == Input.Keys.UP)
-            cam.translate(0,32);
-        if(keycode == Input.Keys.DOWN)
-            cam.translate(0,-32);
-        
-      //Map movement.
-    	System.out.println(keycode);
-        if(keycode == Input.Keys.W)
-        	a.Move((int)a.x,(int)a.y+32);
-        if(keycode == Input.Keys.A)
-        	a.Move((int)a.x-32,(int)a.y);
-        if(keycode == Input.Keys.S)
-        	a.Move((int)a.x,(int)a.y-32);
-        if(keycode == Input.Keys.D)
-        	a.Move((int)a.x+32,(int)a.y);
-        
-        a.Move(0,0);
-       
-        if(keycode == Input.Keys.EQUALS || keycode == Input.Keys.PLUS)
-        	zoomIn();
-        if(keycode == Input.Keys.MINUS)
-        	zoomOut();
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-        return false;
-    }
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    	//Vector3 i = new Vector3(screenX,screenY,0);
-    	//Vector3 j = cam.unproject(i); //.scl(scale);
-    	//soldier.setPosition(j.x,j.y);
-        //return true;
-    	return false;
-       
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    	
-    	/*Vector3 i = new Vector3(screenX,screenY,0);
-    	Vector3 j = cam.unproject(i); //.scl(scale);
-    	System.out.println("Movement:");
-    	a.Move((int)j.x-16,(int)j.y-16);
-    	//b.Move(2*(int)j.x/3,2*(int)j.y/3);
-    	//c.Move((int)j.x/3,(int)j.y/3);
-    	
-        return false;*/
-    	return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-    	//System.out.println("TouchDragged at: ("+screenX+","+screenY+"  pointer:"+pointer);
-        return false;
-    }
- 
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-    	System.out.println("Scrolled:"+amount+", scale:"+scaleTest);
-    	scaleTest+=amount;
-    	if(scaleTest<1){scaleTest=1;}
-    	w = Gdx.graphics.getWidth()*scaleTest/10;
-		h = Gdx.graphics.getHeight()*scaleTest/10;
-		cam.setToOrtho(false,w,h);
-		cam.update();
-        return false;
-    }
-    
-    
-    //ADDITONAL MAP FUNCTIONS:
-    private void zoomIn(){
-    	scale = scale * 2;
-    	w = Gdx.graphics.getWidth()/scale;
-		h = Gdx.graphics.getHeight()/scale;
-		cam.setToOrtho(false,w,h);
-		cam.update();
-    }
-    private void zoomOut(){
-    	scale = scale / 2;
-    	w = Gdx.graphics.getWidth()/scale;
-		h = Gdx.graphics.getHeight()/scale;
-		cam.setToOrtho(false,w,h);
-		cam.update();
-    }
 	
 	
 }
