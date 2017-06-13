@@ -48,6 +48,12 @@ public class BattleCommander implements ApplicationListener{
 	private Texture crosshairTex;
 	private Sprite crosshairSpr;
 	
+	//Cursor dynamic texture:
+	private Pixmap cursPixmap;
+	private Texture cursTex;
+	private Sprite cursorSprite;
+	private float cursX,cursY;
+	
 	
 	
 	
@@ -81,7 +87,19 @@ public class BattleCommander implements ApplicationListener{
         crosshairSpr= new Sprite(crosshairTex);
         pixmap.dispose();
         
-        
+     	//Cursor generation:
+  		cursPixmap = new Pixmap(32,32, Pixmap.Format.RGBA8888);
+  		cursPixmap.setColor(Color.CYAN);
+  		cursPixmap.drawLine(16, 16, 16, 25);
+  		cursPixmap.drawLine(0, 32, 3, 29);
+  		cursPixmap.drawLine(32, 32, 29, 29);
+  		cursPixmap.drawLine(0, 0, 3, 3);
+  		cursPixmap.drawLine(32, 0, 29, 3);
+  		cursPixmap.drawCircle(16, 16, 15);
+  		cursTex= new Texture(cursPixmap);
+  		cursorSprite= new Sprite(cursTex);
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursPixmap, 16, 16));
+        cursPixmap.dispose();
 		
 	}
 
@@ -120,6 +138,10 @@ public class BattleCommander implements ApplicationListener{
         crosshairSpr.setPosition((winX-150),10);
         crosshairSpr.draw(sb);
         
+        //Draw cursor addons:
+        //cursorSprite.setPosition(cursX, cursY);
+        //cursorSprite.draw(sb);
+        
         //Draw logo in upper right corner:
         BCOMSprite.draw(sb);
         
@@ -141,7 +163,8 @@ public class BattleCommander implements ApplicationListener{
 	}
 
 	private void queryInput() {
-		// TODO Auto-generated method stub
+		cursX=Gdx.input.getX()-16;
+		cursY=winY-Gdx.input.getY()-16;
 		
 	}
 

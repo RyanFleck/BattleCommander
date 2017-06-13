@@ -10,6 +10,13 @@ public class DesktopLauncher {
 		config.title = "BATTLE COMMANDER";
 		config.width = 800;
 		config.height = 600;
+		
+		//Ryan's temp configs:
+		config.resizable = false;
+		config.backgroundFPS = 30;
+		config.foregroundFPS = 60;
+		config.useGL30 = true;
+		
 		new LwjglApplication(new BattleCommander(), config);
 	}
 }
