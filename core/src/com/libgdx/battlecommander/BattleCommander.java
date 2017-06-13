@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class BattleCommander implements ApplicationListener{
-
+	
 	
 	//HelloWorld objects:
 	private SpriteBatch sb;
@@ -29,25 +30,41 @@ public class BattleCommander implements ApplicationListener{
 	private Texture BCOMLogo;
 	private Sprite BCOMSprite;
 	
+	//Dynamic texture test:
+	private Pixmap pixmap;
+	private Texture crosshairTex;
+	private Sprite crosshairSpr;
+	
+	
 	
 	
 	@Override
 	public void create() {
 		
-		//CHANGE THIS AS IS APPLICABLE:
+		//Code to create version readout.
+		// TODO Modify version number as needed:
 		versionString = "ALPHA ver 0.2.0";
-		
-		//Floating version text.
-		
 		sb = new SpriteBatch();
 		text = new BitmapFont();
-		text.setColor(Color.WHITE);
+		text.setColor(Color.CYAN);
 		
 		//BCOM upper-left logo:
 		BCOMLogo = new Texture(Gdx.files.internal("BComLogo.png"));
         BCOMSprite = new Sprite(BCOMLogo);
+        float logoX = (Gdx.graphics.getWidth()-BCOMSprite.getWidth());
+        float logoY = (Gdx.graphics.getHeight()-BCOMSprite.getHeight());
+        BCOMSprite.setPosition(logoX,logoY);
 		
-		
+        //Dynamic texture test:
+		pixmap = new Pixmap(128,128, Pixmap.Format.RGBA8888);
+		pixmap.setColor(Color.CYAN);
+		pixmap.drawLine(0, 0, pixmap.getWidth(), pixmap.getHeight());
+        pixmap.drawLine(0, pixmap.getHeight(), pixmap.getWidth(), 0);
+        pixmap.drawCircle(pixmap.getWidth()/2, pixmap.getHeight()/2, pixmap.getHeight()/2 - 1);
+        pixmap.drawCircle(pixmap.getWidth()/2, pixmap.getHeight()/2, pixmap.getHeight()/3 - 1);
+        crosshairTex= new Texture(pixmap);
+        crosshairSpr= new Sprite(crosshairTex);
+        pixmap.dispose();
 		
 	}
 
@@ -67,11 +84,23 @@ public class BattleCommander implements ApplicationListener{
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
         
-        //Use sprite-batch to draw.
-        sb.begin();
+        
+        sb.begin();//Use sprite-batch to draw..................................
+        
+        
+        //Draw dynamic texture:
+        crosshairSpr.setPosition((Gdx.graphics.getWidth()/2)-64,(Gdx.graphics.getHeight()/2)-64 );
+        crosshairSpr.draw(sb);
+        
+        //Draw logo in upper right corner:
+        BCOMSprite.draw(sb);
+        
+        //Draw version info:
         text.draw(sb,versionString,50,50);
         text.draw(sb,"BATTLE COMMANDER",50,70);
-        sb.end();
+        
+        
+        sb.end();//End sprite-batch creation...................................
 		
 	}
 
@@ -91,6 +120,7 @@ public class BattleCommander implements ApplicationListener{
 	public void dispose() {
 		sb.dispose();
 		text.dispose();
+		BCOMLogo.dispose();
 		
 	}
 
