@@ -51,9 +51,13 @@ public class BattleCommander implements ApplicationListener{
 	//Cursor dynamic texture:
 	private Pixmap cursPixmap;
 	private Texture cursTex;
-	private Sprite cursorSprite;
-	private float cursX,cursY;
+	//private Sprite cursorSprite;
+	//private float cursX,cursY;
 	
+	//Orthographic camera:
+	
+	
+	//TILED Map data:
 	
 	
 	
@@ -97,7 +101,7 @@ public class BattleCommander implements ApplicationListener{
   		cursPixmap.drawLine(32, 0, 29, 3);
   		cursPixmap.drawCircle(16, 16, 15);
   		cursTex= new Texture(cursPixmap);
-  		cursorSprite= new Sprite(cursTex);
+  		//cursorSprite= new Sprite(cursTex);
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursPixmap, 16, 16));
         cursPixmap.dispose();
 		
@@ -114,13 +118,14 @@ public class BattleCommander implements ApplicationListener{
 	public void render() {
 		queryInput();//Checks keyboard and mouse for input.
 		adjustVars();//Accounts for input and performs respective actions.
-		//Set background color:
+		
+		//Clear frame:
 		Gdx.gl.glClearColor(0.15f,0.15f,0.15f,1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
         //Potentially needed for when resizable window is implemented.
-        //winX=Gdx.graphics.getWidth();
-		//winY=Gdx.graphics.getHeight();
+        winX=Gdx.graphics.getWidth();
+		winY=Gdx.graphics.getHeight();
         
         sb.begin();//Use sprite-batch to draw..................................
         
@@ -158,13 +163,14 @@ public class BattleCommander implements ApplicationListener{
 	}
 
 	private void adjustVars() {
-		// TODO Auto-generated method stub
+		winX=Gdx.graphics.getWidth();
+		winY=Gdx.graphics.getHeight();
 		
 	}
 
 	private void queryInput() {
-		cursX=Gdx.input.getX()-16;
-		cursY=winY-Gdx.input.getY()-16;
+		//cursX=Gdx.input.getX()-16;
+		//cursY=winY-Gdx.input.getY()-16;
 		
 	}
 
