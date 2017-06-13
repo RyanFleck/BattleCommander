@@ -4,7 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /*
@@ -17,18 +19,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BattleCommander implements ApplicationListener{
 
-	//HelloWorld
+	
+	//HelloWorld objects:
 	private SpriteBatch sb;
 	private BitmapFont text;
+	private String versionString;
+	
+	//Simple texture test:
+	private Texture BCOMLogo;
+	private Sprite BCOMSprite;
+	
 	
 	
 	@Override
 	public void create() {
 		
+		//CHANGE THIS AS IS APPLICABLE:
+		versionString = "ALPHA ver 0.2.0";
+		
 		//Floating version text.
+		
 		sb = new SpriteBatch();
 		text = new BitmapFont();
 		text.setColor(Color.WHITE);
+		
+		//BCOM upper-left logo:
+		BCOMLogo = new Texture(Gdx.files.internal("BComLogo.png"));
+        BCOMSprite = new Sprite(BCOMLogo);
 		
 		
 		
@@ -52,8 +69,8 @@ public class BattleCommander implements ApplicationListener{
         
         //Use sprite-batch to draw.
         sb.begin();
-        text.draw(sb,"Battle Commander ALPHA ver 0.2.0",10,10);
-        //text.draw(sb,"Ryan Fleck 2017",50,80);
+        text.draw(sb,versionString,50,50);
+        text.draw(sb,"BATTLE COMMANDER",50,70);
         sb.end();
 		
 	}
