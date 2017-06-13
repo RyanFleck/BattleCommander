@@ -24,16 +24,20 @@ public class BattleCommander implements ApplicationListener{
 	
 	@Override
 	public void create() {
-		//HelloWorld
+		
+		//Floating version text.
 		sb = new SpriteBatch();
 		text = new BitmapFont();
 		text.setColor(Color.WHITE);
 		
+		
+		
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		
+	public void resize(int width, int height){
+		System.out.println("BCM: Resized window to "+width+" by "+height);
+		//cam.setToOrtho(false, width/scale, height/scale);
 		
 	}
 
