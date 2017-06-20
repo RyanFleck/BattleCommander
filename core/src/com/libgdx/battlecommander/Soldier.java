@@ -1,11 +1,14 @@
 package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 
 
+@SuppressWarnings("unused")
 public class Soldier extends Actor implements Unit{
 	
 	//Soldier position, size(pixels) and direction:
@@ -24,6 +28,7 @@ public class Soldier extends Actor implements Unit{
 	private Sprite sSprite;
 	private Texture sTexR; //Running.
 	private Sprite sSpriteR;
+	//private SequenceAction tintBlueCycle;
 	
 	//Overhead info:
 	//private BitmapFont text;
@@ -71,6 +76,16 @@ public class Soldier extends Actor implements Unit{
 		bcom.setFocusedUnit(((Soldier)event.getTarget()));
 		return true;}});
 		
+		/*
+		//Set tint action:
+		ColorAction tintToBlue = new ColorAction();
+		tintToBlue.setColor(Color.CYAN);
+		tintToBlue.setDuration(0.5f);
+		ColorAction tintFromBlue = new ColorAction();
+		tintFromBlue = tintToBlue;
+		tintFromBlue.setReverse(true);
+		tintBlueCycle = new SequenceAction(tintToBlue,tintFromBlue);
+		*/
 				
 		
 		
@@ -79,12 +94,12 @@ public class Soldier extends Actor implements Unit{
 
 	@Override 
 	public void draw(Batch batch, float alpha){
-		if(inMotion)
+		if(inMotion){
 			batch.draw(sSpriteR,getX(),getY(),sizeX,sizeY);
 			
-		else
+		}else{
 			batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
-    }
+    }}
 		
 	@Override
 	public boolean Move(int coordX, int coordY) {
@@ -141,6 +156,14 @@ public class Soldier extends Actor implements Unit{
 	public boolean RecieveFocus() {
 		Db("Focus attained!");
 		selected=true;
+		/*	FAILED EXPERIMENTS. REATTEMPTING SOON.
+		this.sSprite.setAlpha(0.2f);
+		this.sSprite.setColor(Color.CYAN);
+		this.sSpriteR.setColor(Color.CYAN);
+		this.addAction(tintBlueCycle);
+		this.addAction(Actions.color(Color.BLACK, 0.5f));
+		this.addAction(Actions.fadeOut(0.5f));
+		*/
 		return false;
 	}
 
@@ -148,6 +171,7 @@ public class Soldier extends Actor implements Unit{
 	public boolean LoseFocus() {
 		Db("Focus lost!");
 		selected=false;
+		//this.sSprite.setColor(Color.WHITE);
 		// TODO Auto-generated method stub
 		return false;
 	}
