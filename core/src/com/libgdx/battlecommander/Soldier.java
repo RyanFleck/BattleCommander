@@ -92,12 +92,12 @@ public class Soldier extends Actor implements Unit{
 
 	@Override 
 	public void draw(Batch batch, float alpha){
-		if(inMotion)
+		if(inMotion){
 			batch.draw(sSpriteR,getX(),getY(),sizeX,sizeY);
 			
-		else
+		}else{
 			batch.draw(sSprite,getX(),getY(),sizeX,sizeY);
-    }
+    }}
 		
 	@Override
 	public boolean Move(int coordX, int coordY) {
@@ -154,7 +154,12 @@ public class Soldier extends Actor implements Unit{
 	public boolean RecieveFocus() {
 		Db("Focus attained!");
 		selected=true;
+		this.sSprite.setAlpha(0.2f);
+		this.sSprite.setColor(Color.CYAN);
+		this.sSpriteR.setColor(Color.CYAN);
 		this.addAction(tintBlueCycle);
+		this.addAction(Actions.color(Color.BLACK, 0.5f));
+		this.addAction(Actions.fadeOut(0.5f));
 		return false;
 	}
 
@@ -162,6 +167,7 @@ public class Soldier extends Actor implements Unit{
 	public boolean LoseFocus() {
 		Db("Focus lost!");
 		selected=false;
+		//this.sSprite.setColor(Color.WHITE);
 		// TODO Auto-generated method stub
 		return false;
 	}
