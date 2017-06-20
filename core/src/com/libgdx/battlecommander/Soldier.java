@@ -59,7 +59,7 @@ public class Soldier extends Actor implements Unit{
 		//textGen = new FrameBuffer(null, 32,32, true);
 		
 		//System to check if mouse clicks unit:
-		setBounds(getX(),getY(),sizeX,sizeY);
+		setBounds(getX(),getY(),getX()+sizeX,getY()+sizeY);
 		addListener(
 		new InputListener(){
 		@Override
