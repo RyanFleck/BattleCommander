@@ -27,7 +27,7 @@ public class Soldier extends Actor implements Unit{
 	private Sprite sSprite;
 	private Texture sTexR; //Running.
 	private Sprite sSpriteR;
-	private SequenceAction tintBlueCycle;
+	//private SequenceAction tintBlueCycle;
 	
 	//Overhead info:
 	//private BitmapFont text;
@@ -75,6 +75,7 @@ public class Soldier extends Actor implements Unit{
 		bcom.setFocusedUnit(((Soldier)event.getTarget()));
 		return true;}});
 		
+		/*
 		//Set tint action:
 		ColorAction tintToBlue = new ColorAction();
 		tintToBlue.setColor(Color.CYAN);
@@ -83,7 +84,7 @@ public class Soldier extends Actor implements Unit{
 		tintFromBlue = tintToBlue;
 		tintFromBlue.setReverse(true);
 		tintBlueCycle = new SequenceAction(tintToBlue,tintFromBlue);
-		
+		*/
 				
 		
 		
@@ -154,12 +155,14 @@ public class Soldier extends Actor implements Unit{
 	public boolean RecieveFocus() {
 		Db("Focus attained!");
 		selected=true;
+		/*	FAILED EXPERIMENTS. REATTEMPTING SOON.
 		this.sSprite.setAlpha(0.2f);
 		this.sSprite.setColor(Color.CYAN);
 		this.sSpriteR.setColor(Color.CYAN);
 		this.addAction(tintBlueCycle);
 		this.addAction(Actions.color(Color.BLACK, 0.5f));
 		this.addAction(Actions.fadeOut(0.5f));
+		*/
 		return false;
 	}
 
