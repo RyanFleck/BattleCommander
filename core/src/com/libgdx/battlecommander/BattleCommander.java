@@ -31,7 +31,6 @@ import com.badlogic.gdx.utils.TimeUtils;
  * -Texture atlas and sprite-packers, for simple animation. 
  * */
 
-
 public class BattleCommander implements ApplicationListener,InputProcessor{
 	
 	

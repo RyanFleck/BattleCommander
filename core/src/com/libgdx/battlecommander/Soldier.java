@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 
 
+@SuppressWarnings("unused")
 public class Soldier extends Actor implements Unit{
 	
 	//Soldier position, size(pixels) and direction:
