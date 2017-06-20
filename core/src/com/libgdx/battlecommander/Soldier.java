@@ -1,11 +1,14 @@
 package com.libgdx.battlecommander;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -24,6 +27,7 @@ public class Soldier extends Actor implements Unit{
 	private Sprite sSprite;
 	private Texture sTexR; //Running.
 	private Sprite sSpriteR;
+	private SequenceAction tintBlueCycle;
 	
 	//Overhead info:
 	//private BitmapFont text;
@@ -70,6 +74,15 @@ public class Soldier extends Actor implements Unit{
 		((Soldier)event.getTarget()).RecieveFocus();
 		bcom.setFocusedUnit(((Soldier)event.getTarget()));
 		return true;}});
+		
+		//Set tint action:
+		ColorAction tintToBlue = new ColorAction();
+		tintToBlue.setColor(Color.CYAN);
+		tintToBlue.setDuration(0.5f);
+		ColorAction tintFromBlue = new ColorAction();
+		tintFromBlue = tintToBlue;
+		tintFromBlue.setReverse(true);
+		tintBlueCycle = new SequenceAction(tintToBlue,tintFromBlue);
 		
 				
 		
@@ -141,6 +154,7 @@ public class Soldier extends Actor implements Unit{
 	public boolean RecieveFocus() {
 		Db("Focus attained!");
 		selected=true;
+		this.addAction(tintBlueCycle);
 		return false;
 	}
 
